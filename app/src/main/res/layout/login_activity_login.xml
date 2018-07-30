@@ -10,14 +10,14 @@
     tools:context="com.example.benedictlutab.sidelinetskr.modules.login.loginActivity">
 
     <ImageView
-        android:layout_width="310dp"
-        android:layout_height="290dp"
+        android:layout_width="270dp"
+        android:layout_height="250dp"
         android:background="@drawable/img_logo_only"/>
 
     <!--Email Address-->
     <android.support.design.widget.TextInputLayout
         android:id="@+id/tilEmail"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColorHint="#bdbdbd"
@@ -60,10 +60,9 @@
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="330dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
         android:text="CONTINUE"
         android:textColor="#eeeeee"
         android:textSize="18sp"
@@ -83,7 +82,7 @@
     <EditText
         android:id="@+id/etRecoverAccount"
         android:layout_width="wrap_content"
-        android:layout_height="37dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:backgroundTint="@color/colorAccent"
         android:enabled="true"

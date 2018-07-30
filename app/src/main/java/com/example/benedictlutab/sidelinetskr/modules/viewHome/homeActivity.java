@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.example.benedictlutab.sidelinetskr.R;
+import com.example.benedictlutab.sidelinetskr.modules.tasksFeed.displaySkills.displaySkillsFragment;
 
 public class homeActivity extends AppCompatActivity
 {
@@ -29,7 +31,7 @@ public class homeActivity extends AppCompatActivity
                 switch (item.getItemId())
                 {
                     case R.id.action_tasks_feed:
-//                        fragmentManager.beginTransaction().replace(R.id.frmlayout_fragment, taskCategoryFragment.newInstance()).commit();
+                        fragmentManager.beginTransaction().replace(R.id.frmlayout_fragment, displaySkillsFragment.newInstance()).commit();
                         break;
                 }
                 return true;
@@ -37,9 +39,9 @@ public class homeActivity extends AppCompatActivity
         });
 
         // Manually displaying the first fragment - one time only
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.frmlayout_fragment, taskCategoryFragment.newInstance());
-//        transaction.commit();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frmlayout_fragment, displaySkillsFragment.newInstance());
+        transaction.commit();
     }
 
     @Override
