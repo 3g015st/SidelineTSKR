@@ -15,5 +15,6 @@ public class apiRouteUtil
     public String URL_LOGIN                 = DOMAIN + "api/common/login.php";
     public String URL_CHECK_CONNECTION      = DOMAIN + "api/common/checkConnection.php";
     public String URL_MY_SKILLS             = DOMAIN + "api/tasker/mySkills.php";
+    public String URL_AVAILABLE_TASKS       = DOMAIN + "api/tasker/availableTasks.php";
 
 }

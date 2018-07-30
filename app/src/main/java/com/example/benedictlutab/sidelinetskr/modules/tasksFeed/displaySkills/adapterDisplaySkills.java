@@ -1,6 +1,7 @@
 package com.example.benedictlutab.sidelinetskr.modules.tasksFeed.displaySkills;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.example.benedictlutab.sidelinetskr.R;
 import com.example.benedictlutab.sidelinetskr.helpers.fontStyleCrawler;
 import com.example.benedictlutab.sidelinetskr.models.Skill;
+import com.example.benedictlutab.sidelinetskr.modules.tasksFeed.displayTasks.displayTasksActivity;
 
 import java.util.List;
 
@@ -64,8 +66,12 @@ public class adapterDisplaySkills extends RecyclerView.Adapter<adapterDisplaySki
             @Override
             public void onClick(View v)
             {
-                // Go to Task Details.
-                Log.e("SKILL ID: ", holder.SKILL_ID);
+                // Go to available tasks for this skill name.
+                Log.e("SKILL NAME: ", holder.SKILL_NAME);
+
+                Intent intent = new Intent(context, displayTasksActivity.class);
+                intent.putExtra("SKILL_NAME", holder.SKILL_NAME);
+                context.startActivity(intent);
             }
         });
     }
