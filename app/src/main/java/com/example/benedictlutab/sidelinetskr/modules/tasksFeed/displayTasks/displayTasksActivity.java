@@ -99,7 +99,7 @@ public class displayTasksActivity extends Activity
 
     public void replaceFontStyle()
     {
-        fontStyleCrawler fontStyleCrawler = new fontStyleCrawler(getAssets(), "fonts/ralewayRegular.ttf");
+        fontStyleCrawler fontStyleCrawler = new fontStyleCrawler(getAssets(), "fonts/avenir.otf");
         fontStyleCrawler.replaceFonts((ViewGroup)this.findViewById(android.R.id.content));
     }
 
@@ -156,7 +156,14 @@ public class displayTasksActivity extends Activity
                                 jsonObject.getString("date_time_end"),
                                 jsonObject.getString("task_fee"),
                                 jsonObject.getString("status"),
-                                jsonObject.getString("profile_picture"))
+                                jsonObject.getString("profile_picture"),
+                                jsonObject.getString("first_name"),
+                                jsonObject.getString("last_name"),
+                                jsonObject.getString("category_name"),
+                                jsonObject.getString("image_one"),
+                                jsonObject.getString("image_two"),
+                                jsonObject.getString("description"),
+                                jsonObject.getString("date_time_posted"))
                         );
                         listSize = availableTaskList.size();
                         Log.e("listSize: ", String.valueOf(listSize));

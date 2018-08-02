@@ -80,7 +80,7 @@ public class displaySkillsFragment extends Fragment
         }
 
         // Change Font Style.
-        Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/ralewayRegular.ttf");
+        Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/avenir.otf");
         tvTitle.setTypeface(font);
 
         fetchSkills();

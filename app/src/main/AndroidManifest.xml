@@ -23,7 +23,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".modules.viewHome.homeActivity" />
-        <activity android:name=".modules.tasksFeed.displayTasks.displayTasksActivity"></activity>
+        <activity android:name=".modules.tasksFeed.displayTasks.displayTasksActivity" />
+        <activity android:name=".modules.tasksFeed.viewTaskDetails.taskDetailsActivity"></activity>
     </application>
 
 </manifest>

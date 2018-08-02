@@ -66,12 +66,12 @@ public class loginActivity extends AppCompatActivity
     private void changeFontFamily()
     {
         // Change Font Style.
-        fontStyleCrawler fontStyleCrawler = new fontStyleCrawler(getAssets(), "fonts/ralewayRegular.ttf");
+        fontStyleCrawler fontStyleCrawler = new fontStyleCrawler(getAssets(), "fonts/avenir.otf");
         fontStyleCrawler.replaceFonts((ViewGroup)this.findViewById(android.R.id.content));
 
         // Change Hint Font Style.
-        tilEmail.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/ralewayRegular.ttf"));
-        tilPassword.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/ralewayRegular.ttf"));
+        tilEmail.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/avenir.otf"));
+        tilPassword.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/avenir.otf"));
     }
 
     @OnClick(R.id.btnLogin)

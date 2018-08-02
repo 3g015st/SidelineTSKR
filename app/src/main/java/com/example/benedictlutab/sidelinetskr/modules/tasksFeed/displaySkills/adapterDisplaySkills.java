@@ -43,7 +43,7 @@ public class adapterDisplaySkills extends RecyclerView.Adapter<adapterDisplaySki
         View view = inflater.inflate(R.layout.displayskills_layout_rv_skillset, null);
         if(view != null)
         {
-            fontStyleCrawler fontStyleCrawler = new fontStyleCrawler(view.getContext().getAssets(), "fonts/ralewayRegular.ttf");
+            fontStyleCrawler fontStyleCrawler = new fontStyleCrawler(view.getContext().getAssets(), "fonts/avenir.otf");
             fontStyleCrawler.replaceFonts((ViewGroup)view);
         }
         return new ViewHolder(view);

@@ -9,7 +9,7 @@
     <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardBackgroundColor="@color/colorBGPrimary"
+        app:cardBackgroundColor="#616161"
         app:cardCornerRadius="3dp"
         app:cardElevation="10dp"
         app:cardUseCompatPadding="true">
@@ -17,7 +17,7 @@
             android:layout_gravity="left"
             android:layout_width="10dp"
             android:layout_height="match_parent"
-            android:background="#616161">
+            android:background="@color/colorBGPrimary">
         </LinearLayout>
 
         <LinearLayout
@@ -25,10 +25,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!--TITLE AND FEE-->
+            <!--TITLE AND PHOTO-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#424242"
                 android:orientation="horizontal">
 
                 <TextView
@@ -37,23 +38,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Task Title"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
                     android:textAllCaps="true"
                     android:layout_margin="18dp"
                     android:textColor="#e57373" />
-                <TextView
-                    android:id="@+id/tvTaskFee"
-                    android:layout_weight=".20"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Task Fee"
-                    android:textSize="16sp"
-                    android:layout_marginTop="18dp"
-                    android:textColor="#ef9a9a" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/civTaskGiverPhoto"
+                    android:layout_margin="12dp"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:src="@drawable/main_img_person"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="#616161"/>
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="7dp"
                 android:background="@color/colorBGSecondary"/>
 
             <!--ADDRESS AND DUE DATE-->
@@ -91,15 +93,6 @@
                     android:textSize="14sp"
                     android:layout_marginLeft="18dp"
                     android:textColor="#eeeeee" />
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/civTaskGiverPhoto"
-                    android:layout_width="65dp"
-                    android:layout_height="65dp"
-                    android:layout_weight=".40"
-                    android:src="@drawable/main_img_person"
-                    app:civ_border_width="2dp"
-                    app:civ_border_color="#616161"/>
             </LinearLayout>
             <!--STATUS-->
             <LinearLayout
@@ -117,13 +110,25 @@
                     android:layout_marginBottom="5dp"
                     android:textColor="#eeeeee" />
             </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ef5350">
+                <TextView
+                    android:id="@+id/tvTaskFee"
+                    android:gravity="center"
+                    android:layout_weight="1.0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Task Fee"
+                    android:textSize="16sp"
+                    android:layout_margin="5dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorFontPrimary" />
+            </LinearLayout>
 
         </LinearLayout>
-
-
-
-
-
 
 
     </android.support.v7.widget.CardView>

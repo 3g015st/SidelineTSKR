@@ -16,6 +16,6 @@
 
     <!--Bottom Nav Style-->
     <style name="Widget.BottomNavigationView" parent="Widget.Design.BottomNavigationView">
-        <item name="fontFamily">@font/ralewayregular</item>
+        <item name="fontFamily">@font/avenir</item>
     </style>
 </resources>

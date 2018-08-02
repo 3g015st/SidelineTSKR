@@ -1,6 +1,7 @@
 package com.example.benedictlutab.sidelinetskr.modules.tasksFeed.displayTasks;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import com.example.benedictlutab.sidelinetskr.R;
 import com.example.benedictlutab.sidelinetskr.helpers.apiRouteUtil;
 import com.example.benedictlutab.sidelinetskr.helpers.fontStyleCrawler;
 import com.example.benedictlutab.sidelinetskr.models.availableTask;
+import com.example.benedictlutab.sidelinetskr.modules.tasksFeed.viewTaskDetails.taskDetailsActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -43,7 +45,7 @@ public class adapterDisplayTasks extends RecyclerView.Adapter<adapterDisplayTask
         View view = inflater.inflate(R.layout.displaytasks_layout_rv_tasks, null);
         if(view != null)
         {
-            fontStyleCrawler fontStyleCrawler = new fontStyleCrawler(view.getContext().getAssets(), "fonts/ralewayRegular.ttf");
+            fontStyleCrawler fontStyleCrawler = new fontStyleCrawler(view.getContext().getAssets(), "fonts/avenir.otf");
             fontStyleCrawler.replaceFonts((ViewGroup)view);
         }
         return new ViewHolder(view);
@@ -55,7 +57,7 @@ public class adapterDisplayTasks extends RecyclerView.Adapter<adapterDisplayTask
         Log.e("onBindViewHolder:", "STARTED!");
         apiRouteUtil apiRouteUtil = new apiRouteUtil();
 
-        availableTask availableTask = availableTaskList.get(position);
+        final availableTask availableTask = availableTaskList.get(position);
 
         // Bind data.
         holder.TASK_ID = availableTask.getTask_id();
@@ -66,7 +68,7 @@ public class adapterDisplayTasks extends RecyclerView.Adapter<adapterDisplayTask
         holder.tvTaskStatus.setText(availableTask.getStatus());
         holder.tvTaskFee.setText("PHP " + availableTask.getTask_fee());
 
-        holder.IMAGE_URL = apiRouteUtil.DOMAIN + "api" + availableTask.getProfile_picture();
+        holder.IMAGE_URL = apiRouteUtil.DOMAIN + availableTask.getProfile_picture();
         Log.e("IMAGE URL: ", holder.IMAGE_URL);
 
         //Bind fetched image url from server
@@ -79,6 +81,9 @@ public class adapterDisplayTasks extends RecyclerView.Adapter<adapterDisplayTask
             {
                 // Go to Task Details.
                 Log.e("TASK ID: ", holder.TASK_ID);
+                Intent intent = new Intent(context, taskDetailsActivity.class);
+                intent.putExtra("TASK_ID", holder.TASK_ID);
+                context.startActivity(intent);
             }
         });
     }
