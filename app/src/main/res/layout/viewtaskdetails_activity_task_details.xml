@@ -197,6 +197,17 @@
                         android:text="Task Category"
                         android:textColor="@color/colorFontPrimary"
                         android:textSize="15sp" />
+
+                    <!--PLACE AN OFFER-->
+                    <Button
+                        android:id="@+id/btnPlaceOffer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="50dp"
+                        android:text="Place an offer"
+                        android:textColor="#eeeeee"
+                        android:textSize="18sp"
+                        android:background="@drawable/main_btn_bg"/>
                 </LinearLayout>
             </android.support.v4.widget.NestedScrollView>
 

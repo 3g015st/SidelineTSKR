@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -39,11 +42,13 @@ public class displayTasksActivity extends Activity
 {
     @BindView(R.id.rv_tasks) RecyclerView recyclerView;
     @BindView(R.id.btnBack) Button btnBack;
+    @BindView(R.id.etSearch) EditText etSearch;
     @BindView(R.id.tvSkillName) TextView tvSkillName;
     @BindView(R.id.swipeRefLayout_id) SwipeRefreshLayout swipeRefLayout;
 
     private int listSize;
     private List<availableTask> availableTaskList = new ArrayList<>();
+    private adapterDisplayTasks adapterDisplayTasks;
 
     private String SKILL;
 
@@ -63,6 +68,40 @@ public class displayTasksActivity extends Activity
         }
 
            initSwipeRefLayout();
+
+        etSearch.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+                filterList(s.toString());
+            }
+        });
+    }
+
+    private void filterList(String text)
+    {
+        List<availableTask> filteredList = new ArrayList<>();
+
+        for (availableTask availableTask : availableTaskList)
+        {
+            if (availableTask.getTitle().toLowerCase().contains(text.toLowerCase()))
+            {
+                filteredList.add(availableTask);
+            }
+        }
+
+        adapterDisplayTasks.filterList(filteredList);
     }
 
     @OnClick(R.id.btnBack)
@@ -79,7 +118,7 @@ public class displayTasksActivity extends Activity
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapterDisplayTasks adapterDisplayTasks = new adapterDisplayTasks(getApplicationContext(), availableTaskList);
+        adapterDisplayTasks = new adapterDisplayTasks(getApplicationContext(), availableTaskList);
         recyclerView.setAdapter(adapterDisplayTasks);
 
         if (listSize == 0)

@@ -14,6 +14,18 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <!--Text input layout counter style-->
+    <style name="TextAppearance.App.TextInputLayout.Counter" parent="@android:style/TextAppearance">
+        <item name="android:textColor">#f44336</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <!--Text input layout counter exceeded style-->
+    <style name="TextAppearance.App.TextInputLayout.Counter.Exceed" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
     <!--Bottom Nav Style-->
     <style name="Widget.BottomNavigationView" parent="Widget.Design.BottomNavigationView">
         <item name="fontFamily">@font/avenir</item>

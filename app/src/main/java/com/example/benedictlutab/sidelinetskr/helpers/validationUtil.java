@@ -55,4 +55,16 @@ public class validationUtil
 
         return matcher.matches();
     }
+
+    public boolean isValidOfferMessage(EditText text)
+    {
+        String description = text.getText().toString();
+
+        if(description.length() < 40)
+        {
+            return false;
+        }
+        else
+            return true;
+    }
 }

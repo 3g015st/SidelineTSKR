@@ -17,6 +17,7 @@ import com.example.benedictlutab.sidelinetskr.models.availableTask;
 import com.example.benedictlutab.sidelinetskr.modules.tasksFeed.viewTaskDetails.taskDetailsActivity;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -86,6 +87,13 @@ public class adapterDisplayTasks extends RecyclerView.Adapter<adapterDisplayTask
                 context.startActivity(intent);
             }
         });
+    }
+
+
+    public void filterList(List<availableTask> filteredList)
+    {
+        availableTaskList = filteredList;
+        notifyDataSetChanged();
     }
 
     @Override

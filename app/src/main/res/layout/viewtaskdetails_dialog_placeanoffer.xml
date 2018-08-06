@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#00ffff00"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardBackgroundColor="@color/colorBGSecondary"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_margin="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvDialogTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
+                android:text="Place an Offer"
+                android:textAllCaps="true"
+                android:textColor="@color/colorFontPrimary"
+                android:textSize="21sp"
+                android:textStyle="bold" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/tilAmount"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="#bdbdbd"
+                app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
+                <EditText
+                    android:id="@+id/etAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:backgroundTint="@color/colorAccent"
+                    android:hint="Amount"
+                    android:textColor="#eeeeee"
+                    android:inputType="numberDecimal"
+                    android:textSize="15dp"
+                    android:maxLength="10"
+                    android:singleLine="true"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/tilMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:textColorHint="#bdbdbd"
+                app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
+                app:counterEnabled="true"
+                app:counterMaxLength="40"
+                app:counterOverflowTextAppearance="@style/TextAppearance.App.TextInputLayout.Counter.Exceed"
+                app:counterTextAppearance="@style/TextAppearance.App.TextInputLayout.Counter">
+                <EditText
+                    android:id="@+id/etMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:backgroundTint="@color/colorAccent"
+                    android:hint="Message"
+                    android:textColor="@color/colorFontPrimary"
+                    android:textSize="15dp"
+                    android:inputType="textMultiLine|textFilter"
+                    android:maxLength="60"
+                    android:ems="8"
+                    android:lines="3"
+                    android:maxLines="3"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:text="Submit"
+                android:textColor="#eeeeee"
+                android:textSize="18sp"
+                android:background="@drawable/main_btn_bg"/>
+        </LinearLayout>
+
+
+
+    </android.support.v7.widget.CardView>
+
+
+</LinearLayout>
