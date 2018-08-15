@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.example.benedictlutab.sidelinetskr.R;
+import com.example.benedictlutab.sidelinetskr.modules.more.moreFragment;
 import com.example.benedictlutab.sidelinetskr.modules.myTasks.myTasksFragment;
 import com.example.benedictlutab.sidelinetskr.modules.tasksFeed.displaySkills.displaySkillsFragment;
 
@@ -36,6 +37,9 @@ public class homeActivity extends AppCompatActivity
                         break;
                     case R.id.action_tasks:
                         fragmentManager.beginTransaction().replace(R.id.frmlayout_fragment, myTasksFragment.newInstance()).commit();
+                        break;
+                    case R.id.action_more:
+                        fragmentManager.beginTransaction().replace(R.id.frmlayout_fragment, moreFragment.newInstance()).commit();
                         break;
                 }
                 return true;

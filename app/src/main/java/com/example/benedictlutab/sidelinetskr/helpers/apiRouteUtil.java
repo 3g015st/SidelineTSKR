@@ -8,7 +8,7 @@ public class apiRouteUtil
 {
     // Set domain
 //    public String DOMAIN = "http://192.168.1.5/Sideline/";
-      public String DOMAIN = "http://192.168.1.7/Sideline/";
+      public String DOMAIN = "http://192.168.0.101/Sideline/";
 //    public String DOMAIN = "http://192.168.43.218/Sideline/";
 
     // Routes

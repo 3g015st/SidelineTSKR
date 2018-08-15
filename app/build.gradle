@@ -47,4 +47,9 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     //PrettyTime
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
+    //BrainTree
+    implementation 'com.braintreepayments.api:drop-in:3.3.0'
+    //GSON
+    implementation 'com.google.code.gson:gson:2.8.5'
+
 }
