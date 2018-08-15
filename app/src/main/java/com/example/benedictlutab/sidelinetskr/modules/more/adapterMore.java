@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.benedictlutab.sidelinetskr.helpers.fontStyleCrawler;
 import com.example.benedictlutab.sidelinetskr.R;
 import com.example.benedictlutab.sidelinetskr.modules.wallet.denominationList.denominationListActivity;
+import com.example.benedictlutab.sidelinetskr.modules.wallet.myWallet.myWalletActivity;
 
 import java.util.ArrayList;
 
@@ -69,7 +70,7 @@ public class adapterMore extends RecyclerView.Adapter<adapterMore.ViewHolder>
         switch(position)
         {
             case 0:
-                intent = new Intent(context, denominationListActivity.class);
+                intent = new Intent(context, myWalletActivity.class);
                 context.startActivity(intent);
                 break;
             case 1:

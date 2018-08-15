@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.benedictlutab.sidelinetskr.R;
 import com.example.benedictlutab.sidelinetskr.helpers.fontStyleCrawler;
+import com.example.benedictlutab.sidelinetskr.modules.wallet.myWallet.topUpActivity;
 
 import java.util.ArrayList;
 
@@ -58,21 +59,41 @@ public class adapterDenominationList extends RecyclerView.Adapter<adapterDenomin
             public void onClick(View v)
             {
                 Log.d("onBindViewHolder", "onClick: called "+arrlistItemNames.get(position)+" "+position);
-                goToActivity(position);
+                loadWallet(position, Double.parseDouble(arrlistItemNames.get(position).toString()));
             }
         });
     }
 
-    public void goToActivity(final int position)
+    public void loadWallet(final int position, final double amount)
     {
         final Intent intent;
+        Log.e("loadWallet: ", Double.toString(amount));
         switch(position)
         {
             case 0:
+                intent = new Intent(context, topUpActivity.class);
+                intent.putExtra("AMOUNT", Double.toString(amount));
+                context.startActivity(intent);
                 break;
             case 1:
+                intent = new Intent(context, topUpActivity.class);
+                intent.putExtra("AMOUNT", Double.toString(amount));
+                context.startActivity(intent);
                 break;
             case 2:
+                intent = new Intent(context, topUpActivity.class);
+                intent.putExtra("AMOUNT", Double.toString(amount));
+                context.startActivity(intent);
+                break;
+            case 3:
+                intent = new Intent(context, topUpActivity.class);
+                intent.putExtra("AMOUNT", Double.toString(amount));
+                context.startActivity(intent);
+                break;
+            case 4:
+                intent = new Intent(context, topUpActivity.class);
+                intent.putExtra("AMOUNT", Double.toString(amount));
+                context.startActivity(intent);
                 break;
         }
     }
