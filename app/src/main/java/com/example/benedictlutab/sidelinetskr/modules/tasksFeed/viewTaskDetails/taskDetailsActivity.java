@@ -80,7 +80,7 @@ public class taskDetailsActivity extends AppCompatActivity
     private final static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
     private Date postedDate = new Date();
 
-    private String TASK_ID, USER_ID;
+    private String TASK_ID, USER_ID, TASKER_ID, STATUS;
     private SharedPreferences sharedPreferences;
     private String[] taskImages = new String[2];
 
@@ -103,6 +103,7 @@ public class taskDetailsActivity extends AppCompatActivity
         }
 
         initSwipeRefLayout();
+
     }
 
     private void changeFontFamily()
@@ -244,6 +245,11 @@ public class taskDetailsActivity extends AppCompatActivity
                         tvTaskCategory.setText(jsonObject.getString("category_name"));
                         tvTaskFee.setText("PHP " + jsonObject.getString("task_fee"));
 
+                        TASKER_ID = jsonObject.getString("tasker_id");
+                        Log.e("TASKER_ID: ", TASKER_ID);
+
+                        STATUS = jsonObject.getString("status");
+
                         // Fetch task photos
                         taskImages[0] = jsonObject.getString("image_one");
                         taskImages[1] = jsonObject.getString("image_two");
@@ -254,6 +260,22 @@ public class taskDetailsActivity extends AppCompatActivity
                             setImageInViewFlipper(apiRouteUtil.DOMAIN + taskImages[i]);
                             Log.e("TASKIMGS: ", apiRouteUtil.DOMAIN + taskImages[i]);
                         }
+                    }
+
+                    if(isTaskAlreadyAssigned())
+                    {
+                        // No network connection.
+                        new SweetAlertDialog(taskDetailsActivity.this, SweetAlertDialog.ERROR_TYPE).setTitleText("ERROR").setContentText("It seems that there is already an assigned tasker for this task :(")
+                                .setConfirmText("OK")
+                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener()
+                                {
+                                    @Override
+                                    public void onClick(SweetAlertDialog sDialog) {
+                                        // Exit application.
+                                        finish();
+                                    }
+                                })
+                                .show();
                     }
                 }
                 catch (JSONException e)
@@ -359,6 +381,19 @@ public class taskDetailsActivity extends AppCompatActivity
 
         // Display progress dialog.
         swalDialog.show();
+    }
+
+    private boolean isTaskAlreadyAssigned()
+    {
+        Log.e("isTaskAlreadyAssigned: ", "STARTED!");
+        Log.e("USER_ID: ", USER_ID);
+        Log.e("STATUS: ", STATUS);
+        if(!USER_ID.equals(TASKER_ID) && STATUS.equals("ASSIGNED"))
+        {
+            return true;
+        }
+        else
+            return false;
     }
 
     private void setImageInViewFlipper(String imgUrl)

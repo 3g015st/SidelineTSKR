@@ -3,6 +3,7 @@ package com.example.benedictlutab.sidelinetskr.modules.tasksFeed.displayTasks;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -51,6 +52,8 @@ public class displayTasksActivity extends Activity
     private adapterDisplayTasks adapterDisplayTasks;
 
     private String SKILL;
+
+    private final Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -135,7 +138,6 @@ public class displayTasksActivity extends Activity
         tvSkillName.setText(SKILL +" ("+Integer.toString(listSize)+")");
     }
 
-
     public void replaceFontStyle()
     {
         fontStyleCrawler fontStyleCrawler = new fontStyleCrawler(getAssets(), "fonts/avenir.otf");
@@ -173,7 +175,6 @@ public class displayTasksActivity extends Activity
         availableTaskList.clear();
 
         apiRouteUtil apiRouteUtil = new apiRouteUtil();
-
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, apiRouteUtil.URL_AVAILABLE_TASKS, new Response.Listener<String>()
         {

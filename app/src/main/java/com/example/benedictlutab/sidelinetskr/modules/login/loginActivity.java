@@ -1,6 +1,8 @@
 package com.example.benedictlutab.sidelinetskr.modules.login;
 
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -11,6 +13,7 @@ import android.graphics.Typeface;
 import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.android.volley.Request;
@@ -45,10 +48,13 @@ public class loginActivity extends AppCompatActivity
     @BindView(R.id.etPassword) EditText etPassword;
     @BindView(R.id.tilEmail) TextInputLayout tilEmail;
     @BindView(R.id.tilPassword) TextInputLayout tilPassword;
+    @BindView(R.id.btnLogin) Button btnLogin;
 
     private String ROLE = "Tasker";
     private SharedPreferences sharedPreferences;
     private String message, response_code;
+
+    private String REQUEST = "CHECK_CONN";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -61,6 +67,25 @@ public class loginActivity extends AppCompatActivity
 
         // Make uneditable.
         etRecoverAccount.setFocusable(false);
+
+        // Check network connection if available.
+        if(!haveNetworkConnection())
+        {
+            // No network connection.
+            new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setTitleText("Network Error").setContentText("It seems that there is an error in your connection, try again later :(")
+                    .setConfirmText("OK")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener()
+                    {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            // Exit application.
+                            finish();
+                        }
+                    })
+                    .show();
+        }
+        else
+        {checkServerConnection();}
     }
 
     private void changeFontFamily()
@@ -191,4 +216,109 @@ public class loginActivity extends AppCompatActivity
         }
     }
 
+    private boolean haveNetworkConnection()
+    {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = connectivityManager.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo)
+        {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
+    }
+
+    private void checkServerConnection()
+    {
+        Log.e("checkServerConn:", "START!");
+        // Disable buttons first.
+        btnLogin.setEnabled(false);
+        etRecoverAccount.setEnabled(false);
+
+        // Get route obj.
+        apiRouteUtil apiRouteUtil = new apiRouteUtil();
+
+        final SweetAlertDialog swalDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+        swalDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        swalDialog.setTitleText("");
+        swalDialog.setCancelable(false);
+
+        StringRequest StringRequest = new StringRequest(Request.Method.POST, apiRouteUtil.URL_CHECK_CONNECTION,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String ServerResponse)
+                    {
+                        // Showing response message coming from server.
+                        Log.e("RESPONSE: ", ServerResponse);
+
+                        // If there is no connection to server,
+                        if(ServerResponse.equals("ERROR"))
+                        {
+                            swalDialog.hide();
+                            showNetworkError();
+                        }
+                        else
+                        {
+                            // Enable buttons
+                            swalDialog.hide();
+                            btnLogin.setEnabled(true);
+                            etRecoverAccount.setEnabled(true);
+                        }
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError)
+                    {
+                        // Showing error message if something goes wrong.
+                        Log.e("Error Response:", volleyError.toString());
+                        swalDialog.hide();
+                        showNetworkError();
+                    }
+                })
+        {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                // Creating Map String Params.
+                Map<String, String> Parameter = new HashMap<String, String>();
+                // Sending all registration fields to 'Parameter'.
+                Parameter.put("request", REQUEST);
+                return Parameter;
+            }
+        };
+        // Initialize requestQueue.
+        RequestQueue requestQueue = Volley.newRequestQueue(loginActivity.this);
+        // Send the StringRequest to the requestQueue.
+        requestQueue.add(StringRequest);
+
+        swalDialog.show();
+    }
+
+    private void showNetworkError()
+    {
+        Log.e("showNetworkError:", "START!");
+        new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setTitleText("Network Error").setContentText("It seems there is a problem in our servers please try again later :(")
+                .setConfirmText("OK")
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener()
+                {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        // Exit application.
+                        finish();
+                    }
+                })
+                .show();
+    }
 }
+
+
