@@ -1,6 +1,7 @@
 package com.example.benedictlutab.sidelinetskr.modules.myTasks;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import com.example.benedictlutab.sidelinetskr.R;
 import com.example.benedictlutab.sidelinetskr.helpers.apiRouteUtil;
 import com.example.benedictlutab.sidelinetskr.helpers.fontStyleCrawler;
 import com.example.benedictlutab.sidelinetskr.models.Task;
+import com.example.benedictlutab.sidelinetskr.modules.tasksFeed.viewTaskDetails.taskDetailsActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -79,6 +81,33 @@ public class adapterMyTasks extends RecyclerView.Adapter<adapterMyTasks.ViewHold
             {
                 // Go to Task Details.
                 Log.e("TASK ID: ", holder.TASK_ID);
+
+                Intent intent = new Intent(context, taskDetailsActivity.class);
+                intent.putExtra("TASK_ID", holder.TASK_ID);
+                context.startActivity(intent);
+
+                //Add task to device's calendar
+//                Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Hong_Kong"));
+//                SimpleDateFormat sdf = new SimpleDateFormat("E, MM-dd-yyyy", Locale.getDefault());
+//                try
+//                {
+//                    Log.e("PARSING DATE:", "START!");
+//                    sdf.setTimeZone(TimeZone.getTimeZone("Asia/Hong_Kong"));
+//                    cal.setTime(sdf.parse(holder.tvTaskDate.getText().toString()));
+//                }
+//                catch (ParseException e)
+//                {
+//                    e.printStackTrace();
+//                }
+//
+//                Log.e("END DATE:", String.valueOf(cal.getTimeInMillis()));
+//                Intent intent = new Intent(Intent.ACTION_EDIT);
+//
+//                intent.setType("vnd.android.cursor.item/event");
+//                intent.putExtra("eventLocation", holder.tvTaskAddress.getText().toString());
+//                intent.putExtra("title", holder.tvTaskTitle.getText().toString());
+//                intent.putExtra("endTime",cal.getTimeInMillis());
+//                context.startActivity(intent);
             }
         });
     }

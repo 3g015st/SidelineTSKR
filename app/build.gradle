@@ -51,5 +51,8 @@ dependencies {
     implementation 'com.braintreepayments.api:drop-in:3.3.0'
     //GSON
     implementation 'com.google.code.gson:gson:2.8.5'
-
+    //Picasso Transformations
+    implementation 'jp.wasabeef:picasso-transformations:2.2.1'
+    //SMS VERIFY CATCHER
+    implementation 'com.github.stfalcon:smsverifycatcher:0.3.2'
 }

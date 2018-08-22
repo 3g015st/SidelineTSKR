@@ -42,7 +42,7 @@ public class moreFragment extends Fragment
         initItemNames();
 
         RecyclerView recyclerView = rootView.findViewById(R.id.recyclerView_id);
-        adapterMore adapterMore = new adapterMore(getActivity().getApplicationContext(), arrlistItemNames);
+        adapterMore adapterMore = new adapterMore(getActivity(), arrlistItemNames);
         recyclerView.setAdapter(adapterMore);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
 

@@ -1,17 +1,18 @@
 package com.example.benedictlutab.sidelinetskr.modules.tasksFeed.viewTaskDetails;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -19,9 +20,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.android.volley.Request;
@@ -34,16 +33,19 @@ import com.example.benedictlutab.sidelinetskr.R;
 import com.example.benedictlutab.sidelinetskr.helpers.apiRouteUtil;
 import com.example.benedictlutab.sidelinetskr.helpers.fontStyleCrawler;
 import com.example.benedictlutab.sidelinetskr.helpers.validationUtil;
+import com.example.benedictlutab.sidelinetskr.modules.openTransactionSummary.openTransSummActivity;
+import com.example.benedictlutab.sidelinetskr.modules.viewTgProfile.tgProfileActivity;
 import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 import com.sdsmdg.tastytoast.TastyToast;
 import com.squareup.picasso.Picasso;
+import com.stfalcon.smsverifycatcher.OnSmsCatchListener;
+import com.stfalcon.smsverifycatcher.SmsVerifyCatcher;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.ocpsoft.prettytime.PrettyTime;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -51,6 +53,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,6 +74,7 @@ public class taskDetailsActivity extends AppCompatActivity
     @BindView(R.id.tvTaskFee) TextView tvTaskFee;
     @BindView(R.id.tvTaskCategory) TextView tvTaskCategory;
     @BindView(R.id.tvTaskDescription) TextView tvTaskDescription;
+    @BindView(R.id.tvTaskStatus) TextView tvTaskStatus;
 
     @BindView(R.id.swipeRefLayout_id) SwipeRefreshLayout swipeRefLayout;
 
@@ -77,12 +82,16 @@ public class taskDetailsActivity extends AppCompatActivity
 
     @BindView(R.id.vfTaskImages) ViewFlipper vfTaskImages;
 
+    @BindView(R.id.btnStart) Button btnStart;
+
     private final static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
     private Date postedDate = new Date();
 
-    private String TASK_ID, USER_ID, TASKER_ID, STATUS;
+    private String TASK_ID, TASK_GIVER_ID, USER_ID, TASKER_ID, STATUS;
     private SharedPreferences sharedPreferences;
     private String[] taskImages = new String[2];
+
+    private SmsVerifyCatcher smsVerifyCatcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -104,6 +113,53 @@ public class taskDetailsActivity extends AppCompatActivity
 
         initSwipeRefLayout();
 
+        //init SmsVerifyCatcher
+        smsVerifyCatcher = new SmsVerifyCatcher(this, new OnSmsCatchListener<String>()
+        {
+            @Override
+            public void onSmsCatch(String message)
+            {
+                String code = parseCode(message);
+                Log.e("TRANS_CODE: ", code);
+                openTransSummary(code);
+            }
+        });
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        smsVerifyCatcher.onStart();
+    }
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        smsVerifyCatcher.onStop();
+    }
+
+    /**
+     * need for Android 6 real time permissions
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        smsVerifyCatcher.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    private String parseCode(String message)
+    {
+        Pattern p = Pattern.compile("\\b\\d{5}\\b");
+        Matcher m = p.matcher(message);
+        String code = "";
+        while (m.find())
+        {
+            code = m.group(0);
+        }
+        return code;
     }
 
     private void changeFontFamily()
@@ -238,7 +294,7 @@ public class taskDetailsActivity extends AppCompatActivity
                                 fit().centerInside().into(civTaskGiverPhoto);
 
                         tvTaskTitle.setText(jsonObject.getString("title"));
-                        tvTaskGiver.setText(jsonObject.getString("first_name") +" "+ jsonObject.getString("last_name"));
+                        tvTaskGiver.setText(jsonObject.getString("first_name") +" "+ jsonObject.getString("last_name").substring(0, 1)+".");
                         tvTaskDescription.setText(jsonObject.getString("description"));
                         tvTaskAddress.setText(jsonObject.getString("line_one") +", "+ jsonObject.get("city"));
                         tvTaskDueDate.setText(jsonObject.getString("date_time_end"));
@@ -248,7 +304,11 @@ public class taskDetailsActivity extends AppCompatActivity
                         TASKER_ID = jsonObject.getString("tasker_id");
                         Log.e("TASKER_ID: ", TASKER_ID);
 
+                        TASK_GIVER_ID = jsonObject.getString("task_giver_id");
+                        Log.e("TASK_GIVER_ID: ", TASK_GIVER_ID);
+
                         STATUS = jsonObject.getString("status");
+                        tvTaskStatus.setText(STATUS);
 
                         // Fetch task photos
                         taskImages[0] = jsonObject.getString("image_one");
@@ -260,6 +320,8 @@ public class taskDetailsActivity extends AppCompatActivity
                             setImageInViewFlipper(apiRouteUtil.DOMAIN + taskImages[i]);
                             Log.e("TASKIMGS: ", apiRouteUtil.DOMAIN + taskImages[i]);
                         }
+
+                        initViewVisiblity();
                     }
 
                     if(isTaskAlreadyAssigned())
@@ -383,6 +445,15 @@ public class taskDetailsActivity extends AppCompatActivity
         swalDialog.show();
     }
 
+    @OnClick(R.id.civTaskGiverPhoto)
+    public void viewTgProfile()
+    {
+        Intent intent = new Intent(this, tgProfileActivity.class);
+        intent.putExtra("USER_ID", TASK_GIVER_ID);
+        startActivity(intent);
+        finish();
+    }
+
     private boolean isTaskAlreadyAssigned()
     {
         Log.e("isTaskAlreadyAssigned: ", "STARTED!");
@@ -398,7 +469,6 @@ public class taskDetailsActivity extends AppCompatActivity
 
     private void setImageInViewFlipper(String imgUrl)
     {
-
         ImageView image = new ImageView(getApplicationContext());
         Picasso.with(this).load(imgUrl).into(image);
         vfTaskImages.addView(image);
@@ -416,6 +486,149 @@ public class taskDetailsActivity extends AppCompatActivity
         // set auto start for flipping between views
         vfTaskImages.setAutoStart(true);
         vfTaskImages.startFlipping();
+    }
+
+    private void initViewVisiblity()
+    {
+        if(!STATUS.equals("AVAILABLE"))
+        {
+            Log.e("btnPlaceOffer: ", "GONE!");
+            btnPlaceOffer.setVisibility(View.GONE);
+        }
+        else
+        {
+            Log.e("btnPlaceOffer: ", "VISIBLE!");
+            btnPlaceOffer.setVisibility(View.VISIBLE);
+        }
+
+        if(STATUS.equals("ASSIGNED"))
+        {
+            Log.e("btnStart: ", "VISIBLE!");
+            btnStart.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            Log.e("btnStart: ", "GONE!");
+            btnStart.setVisibility(View.GONE);
+        }
+    }
+
+    @OnClick(R.id.btnStart)
+    public void startTask()
+    {
+        if(STATUS.equals("ASSIGNED"))
+        {
+            // Send post request to update task status to ON-GOING and send sms to task giver.
+            Log.e("startTask:", "START!");
+            apiRouteUtil apiRouteUtil = new apiRouteUtil();
+
+            StringRequest StringRequest = new StringRequest(Request.Method.POST, apiRouteUtil.URL_START_TASK,
+                    new Response.Listener<String>()
+                    {
+                        @Override
+                        public void onResponse(String ServerResponse)
+                        {
+                            // Showing response message coming from server.
+                            String SERVER_RESPONSE = ServerResponse.replaceAll("\\s+","");
+                            Log.e("RESPONSE: ", SERVER_RESPONSE);
+
+                            if(SERVER_RESPONSE.equals("SUCCESS"))
+                            {
+                                initSwipeRefLayout();
+                            }
+                            else
+                            {
+                                Log.e("startTask: ", "ERROR!");
+                            }
+                        }
+                    },
+                    new Response.ErrorListener()
+                    {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError)
+                        {
+                            // Showing error message if something goes wrong.
+                            Log.e("Error Response:", volleyError.toString());
+                        }
+                    })
+            {
+                @Override
+                protected Map<String, String> getParams()
+                {
+                    // Creating Map String Params.
+                    Map<String, String> Parameter = new HashMap<String, String>();
+                    Parameter.put("task_giver_id", TASK_GIVER_ID);
+                    Parameter.put("task_id", TASK_ID);
+
+                    return Parameter;
+                }
+            };
+            // Initialize requestQueue.
+            RequestQueue requestQueue = Volley.newRequestQueue(taskDetailsActivity.this);
+
+            // Send the StringRequest to the requestQueue.
+            requestQueue.add(StringRequest);
+        }
+    }
+
+    private void openTransSummary(final String code)
+    {
+        Log.e("openTransSummary: ", "START!");
+
+        apiRouteUtil apiRouteUtil = new apiRouteUtil();
+
+        StringRequest StringRequest = new StringRequest(Request.Method.POST, apiRouteUtil.URL_VERIFY_CODE,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String ServerResponse)
+                    {
+                        // Showing response message coming from server.
+                        String SERVER_RESPONSE = ServerResponse.replaceAll("\\s+","");
+                        Log.e("RESPONSE: ", SERVER_RESPONSE);
+
+                        if(SERVER_RESPONSE.equals("SUCCESS"))
+                        {
+                            // Open transaction summary activity
+                            Log.e("openTransSumm: ", "SUCCESS!");
+
+                            Intent intent = new Intent(getApplicationContext(), openTransSummActivity.class);
+                            intent.putExtra("TASK_ID", TASK_ID);
+                            finish();
+                            startActivity(intent);
+                        }
+                        else
+                        {
+                            Log.e("openTransSummary: ", "ERROR!");
+                        }
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError)
+                    {
+                        // Showing error message if something goes wrong.
+                        Log.e("Error Response:", volleyError.toString());
+                    }
+                })
+        {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                // Creating Map String Params.
+                Map<String, String> Parameter = new HashMap<String, String>();
+                Parameter.put("transaction_code", code);
+                Parameter.put("task_id", TASK_ID);
+
+                return Parameter;
+            }
+        };
+        // Initialize requestQueue.
+        RequestQueue requestQueue = Volley.newRequestQueue(taskDetailsActivity.this);
+
+        // Send the StringRequest to the requestQueue.
+        requestQueue.add(StringRequest);
     }
 }
 

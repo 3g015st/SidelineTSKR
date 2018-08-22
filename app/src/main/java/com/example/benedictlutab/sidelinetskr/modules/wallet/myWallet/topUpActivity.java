@@ -276,7 +276,6 @@ public class topUpActivity extends AppCompatActivity
         startActivityForResult(dropInRequest.getIntent(this), REQUEST_CODE);
     }
 
-    //TODO: Update Balance.
     private void updateWalletBalance()
     {
         Log.e("updateWalletBalance: ", "START!");
@@ -298,7 +297,7 @@ public class topUpActivity extends AppCompatActivity
                         String SERVER_RESPONSE = ServerResponse.replaceAll("\\s+","");
                         Log.e("RESPONSE: ", SERVER_RESPONSE);
 
-                        if(SERVER_RESPONSE.equals("SUCCESS"))
+                        if(SERVER_RESPONSE.contains("SUCCESS"))
                         {
                             // Exit this activity then prompt success
                             swalDialog.hide();
@@ -340,9 +339,17 @@ public class topUpActivity extends AppCompatActivity
         RequestQueue requestQueue = Volley.newRequestQueue(topUpActivity.this);
 
         // Send the StringRequest to the requestQueue.
+
+        StringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                15000,
+                0,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        // Add the StringRequest to Queue.
         requestQueue.add(StringRequest);
 
         // Display progress dialog.
         swalDialog.show();
     }
+
+
 }

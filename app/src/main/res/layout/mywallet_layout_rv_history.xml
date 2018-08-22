@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70sp"
+    android:padding="20sp"
+    android:orientation="horizontal"
+    android:background="@drawable/more_borderframe"
+    android:id="@+id/llHistory">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/ivCoin"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/main_img_coin"/>
+
+        <TextView
+            android:layout_toRightOf="@id/ivCoin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textSize="17sp"
+            android:textColor="@color/colorFontPrimary"
+            android:text="0 Coins"
+            android:id="@+id/tvLoadedCoin"/>
+
+        <TextView
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#e0e0e0"
+            android:layout_gravity="right"
+            android:text="January 10, 2010"
+            android:id="@+id/tvDate"/>
+    </RelativeLayout>
+</LinearLayout>

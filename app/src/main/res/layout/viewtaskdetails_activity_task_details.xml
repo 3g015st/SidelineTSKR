@@ -91,7 +91,7 @@
                             android:layout_width="55dp"
                             android:layout_height="55dp"
                             android:src="@drawable/main_img_person"
-                            app:civ_border_color="#616161"
+                            app:civ_border_color="#80cbc4"
                             app:civ_border_width="1dp" />
 
                         <TextView
@@ -100,7 +100,8 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="14dp"
                             android:text="Task Giver Name"
-                            android:textColor="@color/colorFontPrimary"
+                            android:textColor="#80cbc4"
+                            android:textAllCaps="true"
                             android:textSize="15sp" />
                     </LinearLayout>
 
@@ -188,15 +189,35 @@
                         android:textSize="15sp" />
 
                     <TextView
+                        android:id="@+id/tvTaskStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="Task Status"
+                        android:textColor="@color/colorFontPrimary"
+                        android:textSize="15sp" />
+
+                    <TextView
                         android:id="@+id/tvTaskCategory"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginBottom="25dp"
+                        android:layout_marginBottom="55dp"
                         android:text="Task Category"
                         android:textColor="@color/colorFontPrimary"
                         android:textSize="15sp" />
+
+                    <!--START TASK-->
+                    <Button
+                        android:id="@+id/btnStart"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="50dp"
+                        android:text="Start the task"
+                        android:textColor="#eeeeee"
+                        android:textSize="18sp"
+                        android:background="@drawable/main_btn_bg"/>
 
                     <!--PLACE AN OFFER-->
                     <Button
@@ -208,6 +229,7 @@
                         android:textColor="#eeeeee"
                         android:textSize="18sp"
                         android:background="@drawable/main_btn_bg"/>
+
                 </LinearLayout>
             </android.support.v4.widget.NestedScrollView>
 

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBGSecondary"
+    android:orientation="vertical"
+    tools:context="com.example.benedictlutab.sidelinetskr.modules.openTransactionSummary.openTransSummActivity">
+
+    <!--App Bar/Title Bar-->
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="195dp"
+        android:layout_gravity="top"
+        android:elevation="10dp"
+        android:background="@color/colorPrimaryLight">
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:layout_gravity="top|left"
+            android:background="@drawable/main_img_back" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="center"
+                android:text="TRANSACTION SUMMARY"
+                android:textAllCaps="true"
+                android:textColor="#212121"
+                android:textSize="23sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="TOTAL AMOUNT"
+                android:textAllCaps="true"
+                android:textColor="#E0E0E0"
+                android:textSize="15sp" />
+            <TextView
+                android:id="@+id/tvTotalAmount"
+                android:elevation="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="PHP 0.0"
+                android:textAllCaps="true"
+                android:layout_marginBottom="15dp"
+                android:textColor="@color/colorFontPrimary"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/tvDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textSize="13sp"
+                android:textAllCaps="true"
+                android:textColor="@color/colorFontPrimary"
+                android:text="Date | Time Completed: January 10, 2010 - 10:10:20" />
+
+
+        </LinearLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <!--DETAILS-->
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="15dp"
+            android:background="#37474F"
+            android:layout_width="match_parent"
+            android:layout_height="350dp">
+
+            <TextView
+                android:id="@+id/ivHeader"
+                android:elevation="2dp"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorBGSecondary"
+                android:text="DETAILS"
+                android:textAllCaps="true"
+                android:textColor="#e57373"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_below="@+id/ivHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textSize="15sp"
+                android:textColor="#78909C"
+                android:text="Service Type: " />
+
+            <TextView
+                android:layout_below="@+id/ivHeader"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textSize="15sp"
+                android:textColor="@color/colorFontPrimary"
+                android:text="Cleaning"
+                android:id="@+id/tvTaskCategory"/>
+
+            <TextView
+            android:layout_below="@+id/tvTaskCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textSize="15sp"
+            android:textColor="#78909C"
+            android:text="Sideline Service Charge: " />
+
+            <TextView
+                android:layout_below="@+id/tvTaskCategory"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textSize="15sp"
+                android:textColor="@color/colorFontPrimary"
+                android:text="PHP 999.99"
+                android:id="@+id/tvServiceCharge"/>
+
+            <TextView
+                android:layout_below="@+id/tvServiceCharge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textSize="15sp"
+                android:textColor="#78909C"
+                android:text="Task Fee: " />
+
+            <TextView
+                android:layout_below="@+id/tvServiceCharge"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textSize="15sp"
+                android:textColor="@color/colorFontPrimary"
+                android:text="PHP 9999.99"
+                android:id="@+id/tvTaskFee"/>
+
+            <TextView
+                android:id="@+id/tvLabel"
+                android:layout_below="@+id/tvTaskFee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textSize="15sp"
+                android:textColor="#78909C"
+                android:text="Location: " />
+
+            <TextView
+                android:layout_below="@+id/tvLabel"
+                android:layout_alignParentLeft="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textSize="15sp"
+                android:textColor="@color/colorFontPrimary"
+                android:text="Sta Mesa, Manila City"
+                android:id="@+id/tvLocation"/>
+
+            <LinearLayout
+                android:layout_marginTop="15dp"
+                android:background="@color/colorBGSecondary"
+                android:layout_below="@id/tvLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/btnCollect"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text="COLLECT PAYMENT"
+                    android:textColor="#eeeeee"
+                    android:textSize="18sp"
+                    android:background="@drawable/main_btn_bg"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+</LinearLayout>

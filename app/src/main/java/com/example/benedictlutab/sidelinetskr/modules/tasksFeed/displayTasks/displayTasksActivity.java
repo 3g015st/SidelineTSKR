@@ -53,8 +53,6 @@ public class displayTasksActivity extends Activity
 
     private String SKILL;
 
-    private final Handler handler = new Handler();
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -71,6 +69,13 @@ public class displayTasksActivity extends Activity
         }
 
            initSwipeRefLayout();
+
+        if(listSize < 0)
+        {
+            etSearch.setFocusable(false);
+        }
+        else
+            etSearch.setFocusable(true);
 
         etSearch.addTextChangedListener(new TextWatcher()
         {

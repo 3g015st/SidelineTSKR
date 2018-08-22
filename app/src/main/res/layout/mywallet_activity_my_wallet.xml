@@ -49,6 +49,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your available balance"
+                android:textColor="@color/colorFontPrimary"
+                android:layout_marginTop="15dp"
+                android:layout_gravity="center"
+                android:textAllCaps="true"
+                android:textSize="17sp"/>
+
             <android.support.v7.widget.CardView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
@@ -72,7 +82,7 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="18dp"
-                        android:background="@drawable/main_img_coin"/>
+                        android:background="@drawable/main_img_treasure"/>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -122,6 +132,15 @@
                     android:textColor="@color/colorFontPrimary"
                     android:textSize="17sp" />
             </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rv_history"
+                tools:layout_editor_absoluteX="745dp"
+                tools:layout_editor_absoluteY="-51dp">
+            </android.support.v7.widget.RecyclerView>
+
         </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 

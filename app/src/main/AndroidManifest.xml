@@ -7,6 +7,10 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
 
     <application
         android:allowBackup="true"
@@ -27,6 +31,7 @@
         <activity android:name=".modules.tasksFeed.viewTaskDetails.taskDetailsActivity" />
         <activity android:name=".modules.wallet.denominationList.denominationListActivity" />
         <activity android:name=".modules.wallet.myWallet.myWalletActivity" />
+        <activity android:name=".modules.viewTgProfile.tgProfileActivity" />
         <activity
             android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
             android:launchMode="singleTask">
@@ -39,7 +44,8 @@
                 <data android:scheme="${applicationId}.braintree" />
             </intent-filter>
         </activity>
-        <activity android:name=".modules.wallet.myWallet.topUpActivity"></activity>
+        <activity android:name=".modules.wallet.myWallet.topUpActivity" />
+        <activity android:name=".modules.openTransactionSummary.openTransSummActivity"></activity>
     </application>
 
 </manifest>

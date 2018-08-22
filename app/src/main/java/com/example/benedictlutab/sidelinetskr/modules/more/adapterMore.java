@@ -1,5 +1,6 @@
 package com.example.benedictlutab.sidelinetskr.modules.more;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
@@ -27,9 +28,9 @@ import butterknife.ButterKnife;
 public class adapterMore extends RecyclerView.Adapter<adapterMore.ViewHolder>
 {
     private ArrayList<String> arrlistItemNames = new ArrayList<>();
-    private Context context;
+    private Activity context;
 
-    public adapterMore(Context context, ArrayList<String> arrlistItemNames)
+    public adapterMore(Activity context, ArrayList<String> arrlistItemNames)
     {
         this.context = context;
         this.arrlistItemNames = arrlistItemNames;
@@ -76,6 +77,12 @@ public class adapterMore extends RecyclerView.Adapter<adapterMore.ViewHolder>
             case 1:
                 break;
             case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                Log.e("goToActivity: ", "SIGNED OUT!");
+                context.finish();
                 break;
         }
     }
