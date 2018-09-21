@@ -113,15 +113,12 @@ public class myTasksFragment extends Fragment
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy)
                 {
                     super.onScrolled(recyclerView, dx, dy);
-                    int itemNo;
-                    if(layoutManager.findFirstCompletelyVisibleItemPosition() != -1)
-                    {
-                        itemNo = layoutManager.findFirstCompletelyVisibleItemPosition() + 1;
-                        Log.e("recyclerView: ", "CurrItem: "+Integer.toString(itemNo) + "TotalItems: "+taskList.size());
+                    int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()+1;
+                    Log.e("initRecyclerView: ", "CURRENT PAGE: " +Integer.toString(firstVisibleItemPosition) +" "+ "TOTAL PAGES: " +taskList.size());
 
-                        // Display current item no and all items no.
-                        tvItems.setText(itemNo + " of " + taskList.size());
-                    }
+                    // Display current item no and all items no.
+                    tvItems.setText(firstVisibleItemPosition + " of " + taskList.size());
+
                 }
             });
         }
@@ -147,7 +144,7 @@ public class myTasksFragment extends Fragment
                         taskList.add(new Task(jsonObject.getString("task_id"),
                                 jsonObject.getString("title"),
                                 jsonObject.getString("image_one"),
-                                jsonObject.getString("date_time_end"),
+                                jsonObject.getString("due_date"),
                                 jsonObject.getString("address"),
                                 jsonObject.getString("task_fee"),
                                 jsonObject.getString("status"))
@@ -160,7 +157,7 @@ public class myTasksFragment extends Fragment
                 catch (JSONException e)
                 {
                     e.printStackTrace();
-                    Log.d("Catch Response: ", e.toString());
+                    Log.e("CATCH RESPONSE: ", e.toString());
                 }
             }
         },
@@ -169,7 +166,7 @@ public class myTasksFragment extends Fragment
                     @Override
                     public void onErrorResponse(VolleyError volleyError)
                     {
-                        Log.d("Error Response: ", volleyError.toString());
+                        Log.e("ERROR RESPONSE: ", volleyError.toString());
                     }
                 })
     {

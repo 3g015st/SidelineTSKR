@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorBGSecondary"
-    tools:context="com.example.benedictlutab.sidelinetskr.modules.viewTgProfile.tgProfileActivity">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.benedictlutab.sidelinetskr.modules.viewMyProfile.myProfileFragment">
 
     <android.support.v4.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -18,47 +17,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!--App Bar/Title Bar-->
-            <android.support.design.widget.AppBarLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="top"
-                android:background="@color/colorPrimaryLight"
-                android:gravity="center">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/btnBack"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginLeft="10dp"
-                        android:background="@drawable/main_img_back" />
-
-                    <TextView
-                        android:id="@+id/tvTaskerName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="20dp"
-                        android:text="TASK GIVER'S PROFILE"
-                        android:textAllCaps="true"
-                        android:textColor="@color/colorFontPrimary"
-                        android:textSize="19sp" />
-                </LinearLayout>
-            </android.support.design.widget.AppBarLayout>
-
             <android.support.v4.widget.NestedScrollView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-              <!--MAIN PROFILE CONTENT-->
-
+                <!--MAIN PROFILE CONTENT-->
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -80,8 +45,8 @@
                         android:elevation="5dp"
                         android:padding="20dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/main_img_photo"
-                        app:civ_border_color="#80cbc4"
+                        android:src="@drawable/main_img_person"
+                        app:civ_border_color="#ef5350"
                         app:civ_border_width="1dp"/>
 
                     <RelativeLayout
@@ -95,7 +60,7 @@
 
 
                         <TextView
-                            android:id="@+id/tvTskrName"
+                            android:id="@+id/tvFullName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
@@ -109,7 +74,7 @@
                             android:id="@+id/tvMemberSince"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/tvTskrName"
+                            android:layout_below="@+id/tvFullName"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="8dp"
                             android:text="Member since January 10, 1989"
@@ -117,13 +82,13 @@
                             android:textSize="14sp" />
 
                         <TextView
-                            android:id="@+id/tvCompleted"
+                            android:id="@+id/tvAverageRating"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/tvMemberSince"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="8dp"
-                            android:text="100 Completed | 4.5 Rating | 100% Completion Rate"
+                            android:text="4.5 Average Rating "
                             android:textColor="#fff"
                             android:textSize="13sp" />
                     </RelativeLayout>
@@ -149,6 +114,50 @@
                             android:textAllCaps="true"
                             android:text="Details" />
 
+                        <!--CITY-->
+                        <TextView
+                            android:id="@+id/tvEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:text="testingemail@gmail.com"
+                            android:textColor="@color/colorFontPrimary"
+                            android:textSize="15sp" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginTop="2dp"
+                            android:background="@color/colorBGPrimary" />
+                        <!--CITY-->
+                        <TextView
+                            android:id="@+id/tvMobileNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:text="+639091297712"
+                            android:textColor="@color/colorFontPrimary"
+                            android:textSize="15sp" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginTop="2dp"
+                            android:background="@color/colorBGPrimary" />
+                        <TextView
+                            android:id="@+id/tvLineOne"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:text="Sta. Mesa"
+                            android:textColor="@color/colorFontPrimary"
+                            android:textSize="15sp" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginTop="2dp"
+                            android:background="@color/colorBGPrimary" />
                         <!--CITY-->
                         <TextView
                             android:id="@+id/tvCity"
@@ -204,50 +213,64 @@
                             android:text="LATEST REVIEWS" />
                         <android.support.v7.widget.RecyclerView
                             android:layout_width="match_parent"
-                            android:layout_height="250dp"
+                            android:layout_height="200dp"
                             android:id="@+id/rv_featuredrevs"
                             android:layout_gravity="center|top"
                             android:overScrollMode="never"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="5dp"
                             tools:layout_editor_absoluteX="745dp"
                             tools:layout_editor_absoluteY="-51dp">
                         </android.support.v7.widget.RecyclerView>
+                        <TextView
+                            android:id="@+id/tvNoLatestReviews"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:text="There are no latest reviews to be displayed."
+                            android:textColor="@color/colorFontPrimary"
+                            android:textSize="15sp" />
                         <Button
                             android:id="@+id/btnViewReviews"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="40dp"
+                            android:layout_margin="20dp"
                             android:text="VIEW ALL REVIEWS"
                             android:textColor="#eeeeee"
                             android:textSize="18sp"
                             android:background="@drawable/main_btn_bg"/>
+
+                        <!--SKILLS-->
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:background="#546E7A"
+                            android:clickable="true"
+                            android:elevation="10dp"
+                            android:padding="15dp"
+                            android:textSize="16sp"
+                            android:textColor="@color/colorFontPrimary"
+                            android:textAllCaps="true"
+                            android:text="SKILLS" />
+                        <android.support.v7.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:id="@+id/rv_skills"
+                            android:layout_gravity="center|top"
+                            android:overScrollMode="never"
+                            android:layout_marginTop="5dp"
+                            tools:layout_editor_absoluteX="745dp"
+                            tools:layout_editor_absoluteY="-51dp">
+                        </android.support.v7.widget.RecyclerView>
 
                     </LinearLayout>
                 </RelativeLayout>
 
             </android.support.v4.widget.NestedScrollView>
 
-            <!--REPORT THIS TASK GIVER-->
-            <android.support.design.widget.AppBarLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#455A64">
-
-                <TextView
-                    android:id="@+id/tvReport"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="8dp"
-                    android:layout_weight="1.0"
-                    android:text="Report this task giver"
-                    android:textAllCaps="true"
-                    android:textColor="#ef5350"
-                    android:textSize="19sp" />
-            </android.support.design.widget.AppBarLayout>
-
         </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 
 
-</LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorBGSecondary"
+    tools:context="com.example.benedictlutab.sidelinetskr.modules.sendEvaluation.sendEvaluationActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--App Bar/Title Bar-->
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="top"
+            android:background="@color/colorPrimaryLight"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnClose"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/main_img_close" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:text="EVALUATION"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorFontPrimary"
+                    android:textSize="19sp" />
+            </LinearLayout>
+        </android.support.design.widget.AppBarLayout>
+
+        <!--MAIN CONTENT-->
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="12dp"
+                android:orientation="vertical">
+
+
+                        <!--TASK GIVER NAME-->
+                        <TextView
+                            android:id="@+id/tvTaskGiver"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="14dp"
+                            android:text="Task Giver Name"
+                            android:textColor="#80cbc4"
+                            android:textAllCaps="true"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textSize="21sp" />
+
+                        <!--PROFILE PICTURE-->
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/civTaskGiverPhoto"
+                            android:layout_width="125dp"
+                            android:layout_height="125dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/main_img_person"
+                            android:layout_margin="25dp"
+                            app:civ_border_color="#80cbc4"
+                            app:civ_border_width="1dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="17dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:gravity="center"
+                    android:singleLine="false"
+                    android:text="Rating"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorFontPrimary"
+                    android:textSize="16sp" />
+
+                <!--RATING-->
+                <com.willy.ratingbar.RotationRatingBar
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/srbStar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:srb_numStars="5"
+                    app:srb_minimumStars="1"
+                    app:srb_rating="1"
+                    app:srb_starWidth="25dp"
+                    app:srb_starHeight="25dp"
+                    app:srb_starPadding="15dp"
+                    app:srb_stepSize="0.5"
+                    app:srb_isIndicator="false"
+                    app:srb_clickable="true"
+                    app:srb_scrollable="true"
+                    app:srb_clearRatingEnabled="true">
+                </com.willy.ratingbar.RotationRatingBar>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/colorBGPrimary" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:gravity="center"
+                    android:singleLine="false"
+                    android:text="REVIEW"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorFontPrimary"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/etReview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:backgroundTint="@color/colorAccent"
+                    android:hint="Nice job!"
+                    android:textColor="@color/colorFontPrimary"
+                    android:textSize="15dp"
+                    android:inputType="textMultiLine|textFilter"
+                    android:maxLength="50" />
+
+                <!--SEND EVAL-->
+                <Button
+                    android:id="@+id/btnSend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="50dp"
+                    android:text="SEND EVALUATION"
+                    android:textColor="#eeeeee"
+                    android:textSize="17sp"
+                    android:background="@drawable/main_btn_bg"/>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
+</LinearLayout>

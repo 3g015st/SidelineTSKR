@@ -43,7 +43,7 @@ import butterknife.OnClick;
 
 public class loginActivity extends AppCompatActivity
 {
-    @BindView(R.id.etRecoverAccount) EditText etRecoverAccount;
+//    @BindView(R.id.etRecoverAccount) EditText etRecoverAccount;
     @BindView(R.id.etEmail) EditText etEmail;
     @BindView(R.id.etPassword) EditText etPassword;
     @BindView(R.id.tilEmail) TextInputLayout tilEmail;
@@ -65,20 +65,20 @@ public class loginActivity extends AppCompatActivity
 
         changeFontFamily();
 
-        // Make uneditable.
-        etRecoverAccount.setFocusable(false);
+        // MAKE RECOVER ACCOUNT UNEDITABLE.
+//        etRecoverAccount.setFocusable(false);
 
-        // Check network connection if available.
+        // CHECK NETWORK CONNECTION IF IT'S EXISTING.
         if(!haveNetworkConnection())
         {
             // No network connection.
-            new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setTitleText("Network Error").setContentText("It seems that there is an error in your connection, try again later :(")
+            new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setTitleText("NETWORK ERROR").setContentText("It seems that there is an error in your connection, please try again later :(")
                     .setConfirmText("OK")
                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener()
                     {
                         @Override
-                        public void onClick(SweetAlertDialog sDialog) {
-                            // Exit application.
+                        public void onClick(SweetAlertDialog sDialog)
+                        {
                             finish();
                         }
                     })
@@ -102,7 +102,7 @@ public class loginActivity extends AppCompatActivity
     @OnClick(R.id.btnLogin)
     public void loginUser()
     {
-        Log.e("loginUser:", "START!");
+        Log.e("loginUser: ", "STARTED!");
 
         validationUtil validationUtil = new validationUtil();
         if(validationUtil.isValidEmail(etEmail) && validationUtil.isEmpty(etPassword))
@@ -116,13 +116,13 @@ public class loginActivity extends AppCompatActivity
         }
         else
         {
-            // Get route obj.
             apiRouteUtil apiRouteUtil = new apiRouteUtil();
 
-            // Init loading dialog.
+            // SHOW LOADING DIALOG (SWAL)
             final SweetAlertDialog swalDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
             swalDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-            swalDialog.setTitleText("");
+            swalDialog.setTitleText(" ");
+            swalDialog.setContentText("Please wait while we connect you to our servers :)");
             swalDialog.setCancelable(false);
 
             StringRequest StringRequest = new StringRequest(Request.Method.POST, apiRouteUtil.URL_LOGIN,
@@ -132,10 +132,8 @@ public class loginActivity extends AppCompatActivity
                         public void onResponse(String ServerResponse)
                         {
                             swalDialog.hide();
-                            // Showing response message coming from server.
                             Log.e("RESPONSE: ", ServerResponse);
 
-                            // Fetch JSON Response
                             try
                             {
                                 JSONArray jsonArray = new JSONArray(ServerResponse);
@@ -146,7 +144,7 @@ public class loginActivity extends AppCompatActivity
                                     message               = jsonObject.getString("message");
                                     response_code         = jsonObject.getString("response_code");
 
-                                    Log.e("Fetch jsonArray:", message + response_code);
+                                    Log.e("Fetch jsonArray: ", message + response_code);
                                 }
 
                                 if(message.equals("Invalid email or password") && response_code.equals("ERROR"))
@@ -164,11 +162,10 @@ public class loginActivity extends AppCompatActivity
                                     editor.putString("USER_ID", message);
                                     editor.commit();
 
-                                    // Go to homeActivity
                                     Intent intent = new Intent(loginActivity.this, homeActivity.class);
                                     finish();
                                     startActivity(intent);
-                                    Log.e("loginUser:", "SUCCESS!" + message);
+                                    Log.e("loginUser: ", "SUCCESS!" + message);
                                 }
 
                             }
@@ -176,7 +173,7 @@ public class loginActivity extends AppCompatActivity
                             {
                                 e.printStackTrace();
                                 swalDialog.hide();
-                                Log.e("loginUser (CATCH): ", e.toString());
+                                Log.e("CATCH RESPONSE: ", e.toString());
                             }
                         }
                     },
@@ -187,7 +184,7 @@ public class loginActivity extends AppCompatActivity
                         {
                             // Showing error message if something goes wrong.
                             swalDialog.hide();
-                            Log.e("Error Response:", volleyError.toString());
+                            Log.e("ERROR RESPONSE: ", volleyError.toString());
                         }
                     })
             {
@@ -205,13 +202,8 @@ public class loginActivity extends AppCompatActivity
                     return Parameter;
                 }
             };
-            // Initialize requestQueue.
             RequestQueue requestQueue = Volley.newRequestQueue(loginActivity.this);
-
-            // Send the StringRequest to the requestQueue.
             requestQueue.add(StringRequest);
-
-            // Display progress dialog.
             swalDialog.show();
         }
     }
@@ -237,17 +229,18 @@ public class loginActivity extends AppCompatActivity
 
     private void checkServerConnection()
     {
-        Log.e("checkServerConn:", "START!");
+        Log.e("checkServerConn: ", "STARTED!");
+
         // Disable buttons first.
         btnLogin.setEnabled(false);
-        etRecoverAccount.setEnabled(false);
+//        etRecoverAccount.setEnabled(false);
 
         // Get route obj.
         apiRouteUtil apiRouteUtil = new apiRouteUtil();
 
         final SweetAlertDialog swalDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
         swalDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-        swalDialog.setTitleText("");
+        swalDialog.setTitleText(" ");
         swalDialog.setCancelable(false);
 
         StringRequest StringRequest = new StringRequest(Request.Method.POST, apiRouteUtil.URL_CHECK_CONNECTION,
@@ -270,7 +263,7 @@ public class loginActivity extends AppCompatActivity
                             // Enable buttons
                             swalDialog.hide();
                             btnLogin.setEnabled(true);
-                            etRecoverAccount.setEnabled(true);
+//                            etRecoverAccount.setEnabled(true);
                         }
                     }
                 },
@@ -296,18 +289,15 @@ public class loginActivity extends AppCompatActivity
                 return Parameter;
             }
         };
-        // Initialize requestQueue.
         RequestQueue requestQueue = Volley.newRequestQueue(loginActivity.this);
-        // Send the StringRequest to the requestQueue.
         requestQueue.add(StringRequest);
-
         swalDialog.show();
     }
 
     private void showNetworkError()
     {
         Log.e("showNetworkError:", "START!");
-        new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setTitleText("Network Error").setContentText("It seems there is a problem in our servers please try again later :(")
+        new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE).setTitleText("NETWORK ERROR").setContentText("It seems there is a problem in our servers, please try again later :(")
                 .setConfirmText("OK")
                 .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener()
                 {

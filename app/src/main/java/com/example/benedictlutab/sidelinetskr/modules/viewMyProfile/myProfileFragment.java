@@ -1,11 +1,14 @@
-package com.example.benedictlutab.sidelinetskr.modules.viewTgProfile;
+package com.example.benedictlutab.sidelinetskr.modules.viewMyProfile;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -20,6 +23,9 @@ import com.example.benedictlutab.sidelinetskr.R;
 import com.example.benedictlutab.sidelinetskr.helpers.apiRouteUtil;
 import com.example.benedictlutab.sidelinetskr.helpers.fontStyleCrawler;
 import com.example.benedictlutab.sidelinetskr.models.Evaluation;
+import com.example.benedictlutab.sidelinetskr.models.Skill;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -33,49 +39,88 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.picasso.transformations.BlurTransformation;
 
-public class tgProfileActivity extends AppCompatActivity
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class myProfileFragment extends Fragment
 {
-    @BindView(R.id.swipeRefLayout_id)
-    SwipeRefreshLayout swipeRefLayout;
+    private View rootView;
+
+    @BindView(R.id.swipeRefLayout_id) SwipeRefreshLayout swipeRefLayout;
     @BindView(R.id.ivCoverPhoto) ImageView ivCoverPhoto;
     @BindView(R.id.civTaskerPhoto) CircleImageView civTaskerPhoto;
-    @BindView(R.id.tvTaskerName) TextView tvTaskerName;
-    @BindView(R.id.tvTskrName) TextView tvTskrName;
+    @BindView(R.id.tvFullName) TextView tvFullName;
     @BindView(R.id.tvMemberSince) TextView tvMemberSince;
+    @BindView(R.id.tvEmail) TextView tvEmail;
+    @BindView(R.id.tvMobileNumber) TextView tvMobileNumber;
+    @BindView(R.id.tvLineOne) TextView tvLineOne;
     @BindView(R.id.tvCity) TextView tvCity;
     @BindView(R.id.tvGender) TextView tvGender;
     @BindView(R.id.tvAge) TextView tvAge;
+    @BindView(R.id.tvAverageRating) TextView tvAverageRating;
+    @BindView(R.id.tvNoLatestReviews) TextView tvNoLatestReviews;
 
-    final apiRouteUtil apiRouteUtil = new apiRouteUtil();
+    apiRouteUtil apiRouteUtil = new apiRouteUtil();
 
     private String USER_ID;
+    private SharedPreferences sharedPreferences;
+
 
     @BindView(R.id.rv_featuredrevs) RecyclerView rv_featuredrevs;
     private List<Evaluation> evaluationList = new ArrayList<>();
     private adapterLatestEval adapterLatestEval;
-
     private int lsEval;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.viewtgprofile_activity_tg_profile);
-        ButterKnife.bind(this);
+    @BindView(R.id.rv_skills) RecyclerView rvSkills;
+    private List<Skill> skillList = new ArrayList<>();
+    private adapterDisplaySkills adapterDisplaySkills;
 
-        Bundle Extras = getIntent().getExtras();
-        if (Extras != null)
+    private int lsSkills;
+
+    public static myProfileFragment newInstance()
+    {
+        myProfileFragment myProfileFragment = new myProfileFragment();
+        return myProfileFragment;
+    }
+
+    public myProfileFragment()
+    {
+        // Required empty public constructor
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState)
+    {
+        Log.e("onCreateView: ","STARTED!");
+
+        rootView = inflater.inflate(R.layout.viewmyprofile_fragment_my_profile, container, false);
+        ButterKnife.bind(this, rootView);
+
+        // Get USER_ID
+        sharedPreferences = this.getActivity().getSharedPreferences("userPreferences", Context.MODE_PRIVATE);
+        if (sharedPreferences.contains("USER_ID"))
         {
-            USER_ID = Extras.getString("USER_ID");
-            Log.e("USER_ID: ", USER_ID);
+            USER_ID = sharedPreferences.getString("USER_ID", "");
+            Log.e("USER_ID:", USER_ID);
         }
 
-        changeFontFamily();
         initSwipeRefLayout();
+
+        return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState)
+    {
+        super.onActivityCreated(savedInstanceState);
+
+        fontStyleCrawler fontStyleCrawler = new fontStyleCrawler(getActivity().getAssets(), "fonts/avenir.otf");
+        fontStyleCrawler.replaceFonts((ViewGroup) this.getView());
     }
 
     private void initSwipeRefLayout()
@@ -86,9 +131,9 @@ public class tgProfileActivity extends AppCompatActivity
             public void onRefresh()
             {
                 // Fetching data from server
-                fetchTaskgiverDetails();
+                fetchMyDetails();
                 fetchEvalList();
-
+                fetchSkills();
             }
         });
         swipeRefLayout.setColorSchemeResources(R.color.colorPrimaryDark, android.R.color.holo_green_dark, android.R.color.holo_orange_dark, android.R.color.holo_blue_dark);
@@ -100,31 +145,18 @@ public class tgProfileActivity extends AppCompatActivity
                 swipeRefLayout.setRefreshing(true);
 
                 // Fetching data from server
-                fetchTaskgiverDetails();
+                fetchMyDetails();
                 fetchEvalList();
+                fetchSkills();
 
                 swipeRefLayout.setRefreshing(false);
             }
         });
     }
 
-    @OnClick(R.id.btnBack)
-    public void onBackPressed()
+    private void fetchMyDetails()
     {
-        this.finish();
-    }
-
-    private void changeFontFamily()
-    {
-        // Change Font Style.
-        fontStyleCrawler fontStyleCrawler = new fontStyleCrawler(getAssets(), "fonts/avenir.otf");
-        fontStyleCrawler.replaceFonts((ViewGroup)this.findViewById(android.R.id.content));
-
-    }
-
-    private void fetchTaskgiverDetails()
-    {
-        Log.e("fetchTaskgiverDetails: ", "STARTED !");
+        Log.e("fetchTaskerDetails: ", "STARTED !");
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, apiRouteUtil.URL_PROFILE_DETAILS, new Response.Listener<String>()
         {
@@ -140,17 +172,20 @@ public class tgProfileActivity extends AppCompatActivity
                         JSONObject jsonObject = jsonArray.getJSONObject(x);
 
                         // Load tasker's prof pic.
-                        Picasso.with(tgProfileActivity.this).load(apiRouteUtil.DOMAIN + jsonObject.getString("profile_picture")).
-                                fit().centerInside().into(civTaskerPhoto);
+                        Picasso.with(getActivity()).load(apiRouteUtil.DOMAIN + jsonObject.getString("profile_picture")).memoryPolicy(MemoryPolicy.NO_CACHE)
+                                .networkPolicy(NetworkPolicy.NO_CACHE).fit().centerInside().into(civTaskerPhoto);
 
                         // Load cover photo.
-                        Picasso.with(tgProfileActivity.this).load(apiRouteUtil.DOMAIN + jsonObject.getString("profile_picture")).transform(new BlurTransformation(tgProfileActivity.this, 25, 1)).
-                                fit().centerInside().into(ivCoverPhoto);
+                        Picasso.with(getActivity()).load(apiRouteUtil.DOMAIN + jsonObject.getString("profile_picture")).transform(new BlurTransformation(getActivity(), 25, 1)).memoryPolicy(MemoryPolicy.NO_CACHE)
+                                .networkPolicy(NetworkPolicy.NO_CACHE).fit().centerInside().into(ivCoverPhoto);
 
-                        tvTaskerName.setText(jsonObject.getString("first_name")+"'s"+" PROFILE");
-                        tvTskrName.setText(jsonObject.getString("first_name") +" "+ jsonObject.getString("last_name").substring(0, 1)+".");
-                        tvMemberSince.setText("Task giver since "+jsonObject.getString("date_created"));
-                        tvCity.setText(jsonObject.getString("city")+ " City");
+                        tvAverageRating.setText(jsonObject.getString("avg_rating") +" "+ "Average Rating");
+                        tvFullName.setText(jsonObject.getString("first_name") +" "+ jsonObject.getString("last_name"));
+                        tvMemberSince.setText("Tasker since " + jsonObject.getString("date_created"));
+                        tvEmail.setText(jsonObject.getString("email"));
+                        tvMobileNumber.setText(jsonObject.getString("mobile_number"));
+                        tvLineOne.setText(jsonObject.getString("line_one"));
+                        tvCity.setText(jsonObject.getString("city"));
                         tvAge.setText(jsonObject.getString("age")+" years old");
                         tvGender.setText(jsonObject.getString("gender"));
                     }
@@ -186,29 +221,31 @@ public class tgProfileActivity extends AppCompatActivity
             }
         };
         // Add the StringRequest to Queue.
-        Volley.newRequestQueue(this).add(stringRequest);
+        Volley.newRequestQueue(getActivity()).add(stringRequest);
     }
 
     private void initrvEval()
     {
         Log.d("initrvEval: ", String.valueOf(lsEval));
 
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rv_featuredrevs.setLayoutManager(layoutManager);
 
-        adapterLatestEval = new adapterLatestEval(getApplicationContext(), evaluationList);
+        adapterLatestEval = new adapterLatestEval(getActivity(), evaluationList);
         rv_featuredrevs.setAdapter(adapterLatestEval);
 
         if (lsEval == 0)
         {
-            Log.d("initRecyclerView: ", "GONE-VISIBLE");
+            Log.e("initRecyclerView: ", "No latest");
             rv_featuredrevs.setVisibility(View.GONE);
+            tvNoLatestReviews.setVisibility(View.VISIBLE);
         }
         else
         {
-            Log.d("initRecyclerView: ", "VISIBLE-GONE");
+            Log.e("initRecyclerView: ", "With latest");
             rv_featuredrevs.setVisibility(View.VISIBLE);
+            tvNoLatestReviews.setVisibility(View.GONE);
         }
     }
 
@@ -270,6 +307,86 @@ public class tgProfileActivity extends AppCompatActivity
         };
 
         // Add the StringRequest to Queue.
-        Volley.newRequestQueue(getApplicationContext()).add(stringRequest);
+        Volley.newRequestQueue(getActivity()).add(stringRequest);
+    }
+
+    private void initrvSkills()
+    {
+        Log.d("lsSkills: ", String.valueOf(lsSkills));
+
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        rvSkills.setLayoutManager(layoutManager);
+
+        adapterDisplaySkills = new adapterDisplaySkills(getActivity(), skillList);
+        rvSkills.setAdapter(adapterDisplaySkills);
+
+        if (lsSkills == 0)
+        {
+            Log.e("initRecyclerView: ", "GONE-VISIBLE");
+            rvSkills.setVisibility(View.GONE);
+        }
+        else
+        {
+            Log.e("initRecyclerView: ", "VISIBLE-GONE");
+            rvSkills.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void fetchSkills()
+    {
+        Log.e("fetchSkills: ", "STARTED!");
+        skillList.clear();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, apiRouteUtil.URL_MY_SKILLS, new Response.Listener<String>()
+        {
+            @Override
+            public void onResponse(String ServerResponse)
+            {
+                try
+                {
+                    Log.e("SERVER RESPONSE: ", ServerResponse);
+                    JSONArray jsonArray = new JSONArray(ServerResponse);
+                    for(int x = 0; x < jsonArray.length(); x++)
+                    {
+                        JSONObject jsonObject = jsonArray.getJSONObject(x);
+                        // Adding the jsonObject to the List.
+                        skillList.add(new Skill(jsonObject.getString("skill_id"),
+                                jsonObject.getString("name")));
+                        lsSkills = skillList.size();
+                        Log.e("lsSkills: ", String.valueOf(lsSkills));
+                    }
+                    initrvSkills();
+                }
+                catch (JSONException e)
+                {
+                    e.printStackTrace();
+                    Log.e("Catch Response: ", e.toString());
+                }
+            }
+        },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError)
+                    {
+                        Log.e("Error Response: ", volleyError.toString());
+                    }
+                })
+        {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                // Creating Map String Params.
+                Map<String, String> Parameter = new HashMap<String, String>();
+
+                Parameter.put("tasker_id", USER_ID);
+
+                return Parameter;
+            }
+        };
+
+        // Add the StringRequest to Queue.
+        Volley.newRequestQueue(getActivity()).add(stringRequest);
     }
 }

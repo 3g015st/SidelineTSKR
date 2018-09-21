@@ -55,4 +55,6 @@ dependencies {
     implementation 'jp.wasabeef:picasso-transformations:2.2.1'
     //SMS VERIFY CATCHER
     implementation 'com.github.stfalcon:smsverifycatcher:0.3.2'
+    // Rating Bar
+    implementation 'com.github.ome450901:SimpleRatingBar:1.4.2'
 }

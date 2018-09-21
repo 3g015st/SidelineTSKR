@@ -55,7 +55,7 @@ public class adapterMyTasks extends RecyclerView.Adapter<adapterMyTasks.ViewHold
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position)
     {
-        Log.e("onBindViewHolder:", "STARTED!");
+        Log.e("onBindViewHolder: ", "STARTED!");
         apiRouteUtil apiRouteUtil = new apiRouteUtil();
 
         Task task = taskList.get(position);
@@ -86,28 +86,6 @@ public class adapterMyTasks extends RecyclerView.Adapter<adapterMyTasks.ViewHold
                 intent.putExtra("TASK_ID", holder.TASK_ID);
                 context.startActivity(intent);
 
-                //Add task to device's calendar
-//                Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Hong_Kong"));
-//                SimpleDateFormat sdf = new SimpleDateFormat("E, MM-dd-yyyy", Locale.getDefault());
-//                try
-//                {
-//                    Log.e("PARSING DATE:", "START!");
-//                    sdf.setTimeZone(TimeZone.getTimeZone("Asia/Hong_Kong"));
-//                    cal.setTime(sdf.parse(holder.tvTaskDate.getText().toString()));
-//                }
-//                catch (ParseException e)
-//                {
-//                    e.printStackTrace();
-//                }
-//
-//                Log.e("END DATE:", String.valueOf(cal.getTimeInMillis()));
-//                Intent intent = new Intent(Intent.ACTION_EDIT);
-//
-//                intent.setType("vnd.android.cursor.item/event");
-//                intent.putExtra("eventLocation", holder.tvTaskAddress.getText().toString());
-//                intent.putExtra("title", holder.tvTaskTitle.getText().toString());
-//                intent.putExtra("endTime",cal.getTimeInMillis());
-//                context.startActivity(intent);
             }
         });
     }

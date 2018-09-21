@@ -87,7 +87,7 @@ public class taskDetailsActivity extends AppCompatActivity
     private final static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
     private Date postedDate = new Date();
 
-    private String TASK_ID, TASK_GIVER_ID, USER_ID, TASKER_ID, STATUS;
+    private String TASK_ID, TASK_GIVER_ID, USER_ID, TASKER_ID, STATUS, BALANCE, COMM_FEE;
     private SharedPreferences sharedPreferences;
     private String[] taskImages = new String[2];
 
@@ -105,10 +105,13 @@ public class taskDetailsActivity extends AppCompatActivity
 
         // Get USER_ID
         sharedPreferences = getSharedPreferences("userPreferences", Context.MODE_PRIVATE);
-        if (sharedPreferences.contains("USER_ID"))
+        if (sharedPreferences.contains("USER_ID") && sharedPreferences.contains("BALANCE"))
         {
             USER_ID = sharedPreferences.getString("USER_ID", "");
+            BALANCE = sharedPreferences.getString("BALANCE", "");
+
             Log.e("USER_ID:", USER_ID);
+            Log.e("BALANCE:", BALANCE);
         }
 
         initSwipeRefLayout();
@@ -175,7 +178,6 @@ public class taskDetailsActivity extends AppCompatActivity
         this.finish();
     }
 
-    @OnClick(R.id.btnPlaceOffer)
     public void showPlaceOfferDialog()
     {
         Log.e("showPlaceOfferDialog:", "START!");
@@ -216,7 +218,7 @@ public class taskDetailsActivity extends AppCompatActivity
                 }
                 if(!validationUtil.isValidOfferMessage(etMessage))
                 {
-                    etMessage.setError("Message is less than 40 characters!");
+                    etMessage.setError("Message is less than 20 characters!");
                 }
                 if(etAmount.getText().toString().isEmpty())
                 {
@@ -294,10 +296,12 @@ public class taskDetailsActivity extends AppCompatActivity
                                 fit().centerInside().into(civTaskGiverPhoto);
 
                         tvTaskTitle.setText(jsonObject.getString("title"));
+
                         tvTaskGiver.setText(jsonObject.getString("first_name") +" "+ jsonObject.getString("last_name").substring(0, 1)+".");
+
                         tvTaskDescription.setText(jsonObject.getString("description"));
                         tvTaskAddress.setText(jsonObject.getString("line_one") +", "+ jsonObject.get("city"));
-                        tvTaskDueDate.setText(jsonObject.getString("date_time_end"));
+                        tvTaskDueDate.setText(jsonObject.getString("due_date"));
                         tvTaskCategory.setText(jsonObject.getString("category_name"));
                         tvTaskFee.setText("PHP " + jsonObject.getString("task_fee"));
 
@@ -309,6 +313,9 @@ public class taskDetailsActivity extends AppCompatActivity
 
                         STATUS = jsonObject.getString("status");
                         tvTaskStatus.setText(STATUS);
+
+                        COMM_FEE = jsonObject.getString("comm_fee");
+                        Log.e("COMM_FEE: ", COMM_FEE);
 
                         // Fetch task photos
                         taskImages[0] = jsonObject.getString("image_one");
@@ -322,12 +329,26 @@ public class taskDetailsActivity extends AppCompatActivity
                         }
 
                         initViewVisiblity();
+                        isOfferOpen();
                     }
 
                     if(isTaskAlreadyAssigned())
                     {
-                        // No network connection.
                         new SweetAlertDialog(taskDetailsActivity.this, SweetAlertDialog.ERROR_TYPE).setTitleText("ERROR").setContentText("It seems that there is already an assigned tasker for this task :(")
+                                .setConfirmText("OK")
+                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener()
+                                {
+                                    @Override
+                                    public void onClick(SweetAlertDialog sDialog) {
+                                        // Exit application.
+                                        finish();
+                                    }
+                                })
+                                .show();
+                    }
+                    else if(isTaskAlreadyCompleted())
+                    {
+                        new SweetAlertDialog(taskDetailsActivity.this, SweetAlertDialog.ERROR_TYPE).setTitleText("ERROR").setContentText("It seems that this task is already completed by you.")
                                 .setConfirmText("OK")
                                 .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener()
                                 {
@@ -376,13 +397,14 @@ public class taskDetailsActivity extends AppCompatActivity
 
     private void sendOffer(final String amount, final String message)
     {
-        Log.e("sendOffer:", "START!");
+        Log.e("sendOffer: ", "START!");
         apiRouteUtil apiRouteUtil = new apiRouteUtil();
 
         // Init loading dialog.
         final SweetAlertDialog swalDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
         swalDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-        swalDialog.setTitleText("");
+        swalDialog.setTitleText(" ");
+        swalDialog.setContentText("Please wait while your offer is sending...");
         swalDialog.setCancelable(false);
 
         StringRequest StringRequest = new StringRequest(Request.Method.POST, apiRouteUtil.URL_SEND_OFFER,
@@ -467,6 +489,19 @@ public class taskDetailsActivity extends AppCompatActivity
             return false;
     }
 
+    private boolean isTaskAlreadyCompleted()
+    {
+        Log.e("isTaskAlreadyComplted: ", "STARTED!");
+        Log.e("USER_ID: ", USER_ID);
+        Log.e("STATUS: ", STATUS);
+        if(USER_ID.equals(TASKER_ID) && STATUS.equals("COMPLETED"))
+        {
+            return true;
+        }
+        else
+            return false;
+    }
+
     private void setImageInViewFlipper(String imgUrl)
     {
         ImageView image = new ImageView(getApplicationContext());
@@ -511,6 +546,7 @@ public class taskDetailsActivity extends AppCompatActivity
             Log.e("btnStart: ", "GONE!");
             btnStart.setVisibility(View.GONE);
         }
+
     }
 
     @OnClick(R.id.btnStart)
@@ -519,8 +555,10 @@ public class taskDetailsActivity extends AppCompatActivity
         if(STATUS.equals("ASSIGNED"))
         {
             // Send post request to update task status to ON-GOING and send sms to task giver.
-            Log.e("startTask:", "START!");
+            Log.e("startTask: ", "STARTED!");
             apiRouteUtil apiRouteUtil = new apiRouteUtil();
+
+            //Display loading...
 
             StringRequest StringRequest = new StringRequest(Request.Method.POST, apiRouteUtil.URL_START_TASK,
                     new Response.Listener<String>()
@@ -534,6 +572,7 @@ public class taskDetailsActivity extends AppCompatActivity
 
                             if(SERVER_RESPONSE.equals("SUCCESS"))
                             {
+                                TastyToast.makeText(getApplicationContext(), "Task has been started :)!", TastyToast.LENGTH_LONG, TastyToast.SUCCESS).show();
                                 initSwipeRefLayout();
                             }
                             else
@@ -573,7 +612,7 @@ public class taskDetailsActivity extends AppCompatActivity
 
     private void openTransSummary(final String code)
     {
-        Log.e("openTransSummary: ", "START!");
+        Log.e("openTransSummary: ", "STARTED!");
 
         apiRouteUtil apiRouteUtil = new apiRouteUtil();
 
@@ -594,6 +633,8 @@ public class taskDetailsActivity extends AppCompatActivity
 
                             Intent intent = new Intent(getApplicationContext(), openTransSummActivity.class);
                             intent.putExtra("TASK_ID", TASK_ID);
+                            intent.putExtra("TASK_GIVER_ID", TASK_GIVER_ID);
+                            intent.putExtra("transaction_code", code);
                             finish();
                             startActivity(intent);
                         }
@@ -629,6 +670,110 @@ public class taskDetailsActivity extends AppCompatActivity
 
         // Send the StringRequest to the requestQueue.
         requestQueue.add(StringRequest);
+    }
+
+    private void isOfferOpen()
+    {
+        Log.e("isOfferOpen: ", "STARTED!!!");
+        Log.e("iOO-BAL: ", BALANCE);
+        Log.e("COMM_FEE: ", COMM_FEE);
+
+        // Display prompt that open is closed then hide send offer button.
+        if(Double.parseDouble(BALANCE) < Double.parseDouble(COMM_FEE))
+        {
+            btnPlaceOffer.setVisibility(View.GONE);
+            final SweetAlertDialog swalDialog = new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE);
+            swalDialog.setTitleText("Insufficient Balance").setContentText("Offer is temporarily closed due to the insufficient balance available (Required Balance: PHP " + COMM_FEE +" above.)")
+                    .setConfirmText("OK")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener()
+                    {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog)
+                        {
+                            sDialog.hide();
+                        }
+                    })
+                    .show();
+        }
+        else
+        {
+            Log.e("isOfferOpen: ", "OFFER IS OPEN!!!");
+        }
+    }
+
+    @OnClick(R.id.btnPlaceOffer)
+    public void getOfferCount()
+    {
+        Log.e("getOfferCount: ", "START!");
+        Log.e("TASKER_ID: ", USER_ID);
+        Log.e("TASK_ID: ", TASK_ID);
+
+        apiRouteUtil apiRouteUtil = new apiRouteUtil();
+
+        StringRequest StringRequest = new StringRequest(Request.Method.POST, apiRouteUtil.URL_GET_OFFER_COUNT,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String ServerResponse)
+                    {
+                        // Showing response message coming from server.
+                        String SERVER_RESPONSE = ServerResponse.replaceAll("\\s+","");
+                        Log.e("RESPONSE: ", SERVER_RESPONSE);
+
+                        int MAX_COUNT = 1;
+
+                        if(Integer.parseInt(SERVER_RESPONSE) > MAX_COUNT || Integer.parseInt(SERVER_RESPONSE) == MAX_COUNT)
+                        {
+                            showPromptOfferExceeded();
+                        }
+                        else if(Integer.parseInt(SERVER_RESPONSE) < MAX_COUNT)
+                        {
+                            showPlaceOfferDialog();
+                        }
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError)
+                    {
+                        // Showing error message if something goes wrong.
+                        Log.e("Error Response:", volleyError.toString());
+                    }
+                })
+        {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                // Creating Map String Params.
+                Map<String, String> Parameter = new HashMap<String, String>();
+                Parameter.put("tasker_id", USER_ID);
+                Parameter.put("task_id", TASK_ID);
+
+                return Parameter;
+            }
+        };
+        // Initialize requestQueue.
+        RequestQueue requestQueue = Volley.newRequestQueue(taskDetailsActivity.this);
+
+        // Send the StringRequest to the requestQueue.
+        requestQueue.add(StringRequest);
+    }
+
+    private void showPromptOfferExceeded()
+    {
+        final SweetAlertDialog swalDialog = new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE);
+        swalDialog.setTitleText("Offer Exceeded").setContentText("You have already placed an offer in this task!")
+                .setConfirmText("OK")
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener()
+                {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog)
+                    {
+                        sDialog.hide();
+                    }
+                })
+                .show();
     }
 }
 

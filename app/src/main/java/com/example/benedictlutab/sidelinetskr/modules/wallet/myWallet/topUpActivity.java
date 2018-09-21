@@ -1,22 +1,16 @@
 package com.example.benedictlutab.sidelinetskr.modules.wallet.myWallet;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.ExecutorDelivery;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -34,14 +28,12 @@ import com.example.benedictlutab.sidelinetskr.helpers.apiRouteUtil;
 import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 import com.sdsmdg.tastytoast.TastyToast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class topUpActivity extends AppCompatActivity
@@ -107,10 +99,10 @@ public class topUpActivity extends AppCompatActivity
                         Log.e("AMOUNT CONVERTED: ", Double.toString(CONVERTED_AMOUNT));
                         Log.e("AMOUNT: ", Double.toString(AMOUNT));
                     }
-                } catch (JSONException e)
+                }
+                catch (JSONException e)
                 {
-                    e.printStackTrace();
-                    Log.e("Catch Response: ", e.toString());
+                    Log.e("CATCH RESPONSE: ", e.toString());
                     topUpActivity.this.finish();
                 }
             }
@@ -120,12 +112,12 @@ public class topUpActivity extends AppCompatActivity
                     @Override
                     public void onErrorResponse(VolleyError volleyError)
                     {
-                        Log.e("Error Response: ", volleyError.toString());
+                        Log.e("ERROR RESPONSE: ", volleyError.toString());
+                        TastyToast.makeText(getApplicationContext(), "Connection timeout, cannot get foreign exchange!", TastyToast.LENGTH_LONG, TastyToast.ERROR).show();
                         topUpActivity.this.finish();
                     }
                 });
 
-        // Add the StringRequest to Queue.
         Volley.newRequestQueue(this).add(stringRequest);
     }
 
@@ -229,7 +221,7 @@ public class topUpActivity extends AppCompatActivity
                    TastyToast.makeText(topUpActivity.this, "Transaction failed!", TastyToast.LENGTH_LONG, TastyToast.ERROR).show();
                    topUpActivity.this.finish();
                }
-               Log.e("ServerRES: ", ServerResponse);
+               Log.e("SERVER RESPONSE: ", ServerResponse);
             }
         },
                 new Response.ErrorListener()
@@ -237,7 +229,9 @@ public class topUpActivity extends AppCompatActivity
                     @Override
                     public void onErrorResponse(VolleyError volleyError)
                     {
-                        Log.e("Error Response: ", volleyError.toString());
+                        Log.e("ERROR RESPONSE: ", volleyError.toString());
+                        TastyToast.makeText(getApplicationContext(), "Transaction cancelled due to slow internet connection", TastyToast.LENGTH_LONG, TastyToast.WARNING).show();
+                        topUpActivity.this.finish();
                     }
                 })
         {
@@ -262,7 +256,7 @@ public class topUpActivity extends AppCompatActivity
         };
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(
                 10000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                0,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         // Add the StringRequest to Queue.
         requestQueue.add(stringRequest);
@@ -271,9 +265,23 @@ public class topUpActivity extends AppCompatActivity
     private void submitPayment()
     {
         Log.e("submitPayment: ", "CALLED!");
+
+        final SweetAlertDialog swalDialog = new SweetAlertDialog(topUpActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+        swalDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        swalDialog.setTitleText(" ");
+        swalDialog.setContentText("Please wait while we are loading your payment options :)");
+        swalDialog.setCancelable(false);
+
         DropInRequest dropInRequest = new DropInRequest().clientToken(TOKEN);
+
+        if(!TOKEN.isEmpty())
+        {
+            swalDialog.hide();
+        }
+
         dropInRequest.disablePayPal();
         startActivityForResult(dropInRequest.getIntent(this), REQUEST_CODE);
+
     }
 
     private void updateWalletBalance()
@@ -284,7 +292,8 @@ public class topUpActivity extends AppCompatActivity
         // Init loading dialog.
         final SweetAlertDialog swalDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
         swalDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-        swalDialog.setTitleText("");
+        swalDialog.setTitleText(" ");
+        swalDialog.setContentText("Please wait while our system process your top-up transaction...");
         swalDialog.setCancelable(false);
 
         StringRequest StringRequest = new StringRequest(Request.Method.POST, apiRouteUtil.URL_UPDATE_WALLET,
@@ -306,9 +315,8 @@ public class topUpActivity extends AppCompatActivity
                         }
                         else
                         {
-                            // Prompt error
                             swalDialog.hide();
-                            TastyToast.makeText(getApplicationContext(), "There has been an error in top up!", TastyToast.LENGTH_LONG, TastyToast.SUCCESS).show();
+                            TastyToast.makeText(getApplicationContext(), "There has been an error in top up!", TastyToast.LENGTH_LONG, TastyToast.ERROR).show();
                         }
                     }
                 },
@@ -317,9 +325,9 @@ public class topUpActivity extends AppCompatActivity
                     @Override
                     public void onErrorResponse(VolleyError volleyError)
                     {
-                        // Showing error message if something goes wrong.
                         swalDialog.hide();
-                        Log.e("Error Response:", volleyError.toString());
+                        Log.e("ERROR RESPONSE: ", volleyError.toString());
+                        TastyToast.makeText(getApplicationContext(), "Connection timeout due to slow internet connection", TastyToast.LENGTH_LONG, TastyToast.ERROR).show();
                     }
                 })
         {
@@ -335,21 +343,12 @@ public class topUpActivity extends AppCompatActivity
                 return Parameter;
             }
         };
-        // Initialize requestQueue.
         RequestQueue requestQueue = Volley.newRequestQueue(topUpActivity.this);
-
-        // Send the StringRequest to the requestQueue.
-
         StringRequest.setRetryPolicy(new DefaultRetryPolicy(
                 15000,
                 0,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        // Add the StringRequest to Queue.
         requestQueue.add(StringRequest);
-
-        // Display progress dialog.
         swalDialog.show();
     }
-
-
 }

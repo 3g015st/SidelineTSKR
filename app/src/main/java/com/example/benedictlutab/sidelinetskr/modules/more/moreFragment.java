@@ -54,8 +54,10 @@ public class moreFragment extends Fragment
         Log.d("moreFragment","initItemNames: on");
         arrlistItemNames.add("eWallet");
         arrlistItemNames.add("Change Password");
-        arrlistItemNames.add("Payment History");
+        arrlistItemNames.add("Update About Me");
+        arrlistItemNames.add("History");
         arrlistItemNames.add("Terms and Conditions");
+        arrlistItemNames.add("Pending Offers");
         arrlistItemNames.add("Sign out");
     }
 }

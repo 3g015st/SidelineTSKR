@@ -63,7 +63,7 @@
                 android:textColorHint="#bdbdbd"
                 app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
                 app:counterEnabled="true"
-                app:counterMaxLength="40"
+                app:counterMaxLength="20"
                 app:counterOverflowTextAppearance="@style/TextAppearance.App.TextInputLayout.Counter.Exceed"
                 app:counterTextAppearance="@style/TextAppearance.App.TextInputLayout.Counter">
                 <EditText

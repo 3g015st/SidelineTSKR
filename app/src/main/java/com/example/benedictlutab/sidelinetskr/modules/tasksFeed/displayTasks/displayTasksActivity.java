@@ -47,6 +47,8 @@ public class displayTasksActivity extends Activity
     @BindView(R.id.tvSkillName) TextView tvSkillName;
     @BindView(R.id.swipeRefLayout_id) SwipeRefreshLayout swipeRefLayout;
 
+    private LinearLayoutManager layoutManager;
+
     private int listSize;
     private List<availableTask> availableTaskList = new ArrayList<>();
     private adapterDisplayTasks adapterDisplayTasks;
@@ -106,9 +108,17 @@ public class displayTasksActivity extends Activity
             if (availableTask.getTitle().toLowerCase().contains(text.toLowerCase()))
             {
                 filteredList.add(availableTask);
+                Log.e("ChildCount: ", String.valueOf(layoutManager.getChildCount()));
+                Log.e("availableTaskList: ", String.valueOf(filteredList.size()));
+                tvSkillName.setText(SKILL +" ("+String.valueOf(filteredList.size()+")"));
+            }
+            else if(filteredList.isEmpty())
+            {
+                Log.e("ChildCount: ", String.valueOf(layoutManager.getChildCount()));
+                Log.e("availableTaskList: ", String.valueOf(filteredList.size()));
+                tvSkillName.setText(SKILL +" ("+String.valueOf(filteredList.size()+")"));
             }
         }
-
         adapterDisplayTasks.filterList(filteredList);
     }
 
@@ -122,7 +132,7 @@ public class displayTasksActivity extends Activity
     {
         Log.d("listSize: ", String.valueOf(listSize));
 
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
