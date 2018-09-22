@@ -21,6 +21,7 @@ public class apiRouteUtil
     public String URL_SEND_EVAL             = DOMAIN + "api/common/sendEvaluation.php";
     public String URL_LOAD_EVAL             = DOMAIN + "api/common/loadEvaluationList.php";
     public String URL_CHANGE_PASS           = DOMAIN + "api/common/changePassword.php";
+    public String URL_FETCH_TASK_HISTORY    = DOMAIN + "api/common/fetchTaskHistory.php";
 
     public String URL_MY_SKILLS             = DOMAIN + "api/tasker/mySkills.php";
     public String URL_AVAILABLE_TASKS       = DOMAIN + "api/tasker/availableTasks.php";

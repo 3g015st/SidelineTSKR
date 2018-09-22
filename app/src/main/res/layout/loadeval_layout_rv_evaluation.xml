@@ -20,16 +20,17 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_marginLeft="5dp"
-        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="15dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <com.willy.ratingbar.RotationRatingBar
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/srbStar"
             android:layout_width="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             app:srb_numStars="5"
             app:srb_minimumStars="1"
             app:srb_starWidth="15dp"
@@ -45,7 +46,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="17sp"
-            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:layout_gravity="center_vertical"
             android:textColor="@color/colorAccent"
             android:text="Task Name"
             android:id="@+id/tvTitle"/>
@@ -53,7 +55,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:layout_gravity="center_vertical"
             android:textColor="@color/colorFontPrimary"
             android:text="Task Name"
             android:id="@+id/tvDateSent"/>
@@ -61,7 +64,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:layout_gravity="center_vertical"
             android:textColor="#607D8B"
             android:text="Task Name"
             android:id="@+id/tvReview"/>

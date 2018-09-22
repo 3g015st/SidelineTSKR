@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.benedictlutab.sidelinetskr.helpers.fontStyleCrawler;
 import com.example.benedictlutab.sidelinetskr.R;
 import com.example.benedictlutab.sidelinetskr.modules.changePassword.changePasswordActivity;
+import com.example.benedictlutab.sidelinetskr.modules.loadTaskHistory.taskHistoryActivity;
 import com.example.benedictlutab.sidelinetskr.modules.login.loginActivity;
 import com.example.benedictlutab.sidelinetskr.modules.updateAboutMe.updateAboutMeActivity;
 import com.example.benedictlutab.sidelinetskr.modules.wallet.myWallet.myWalletActivity;
@@ -85,6 +86,8 @@ public class adapterMore extends RecyclerView.Adapter<adapterMore.ViewHolder>
                 context.startActivity(intent);
                 break;
             case 3:
+                intent = new Intent(context, taskHistoryActivity.class);
+                context.startActivity(intent);
                 break;
             case 4:
                 break;

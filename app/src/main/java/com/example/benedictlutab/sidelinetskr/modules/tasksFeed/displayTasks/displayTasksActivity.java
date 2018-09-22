@@ -141,12 +141,12 @@ public class displayTasksActivity extends Activity
 
         if (listSize == 0)
         {
-            Log.d("initRecyclerView: ", "GONE-VISIBLE");
+            Log.e("initRecyclerView: ", "GONE-VISIBLE");
             recyclerView.setVisibility(View.GONE);
         }
         else
         {
-            Log.d("initRecyclerView: ", "VISIBLE-GONE");
+            Log.e("initRecyclerView: ", "VISIBLE-GONE");
             recyclerView.setVisibility(View.VISIBLE);
         }
 

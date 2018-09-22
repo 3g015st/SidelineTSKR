@@ -49,7 +49,8 @@
         <activity android:name=".modules.openTransactionSummary.openTransSummActivity" />
         <activity android:name=".modules.sendEvaluation.sendEvaluationActivity" />
         <activity android:name=".modules.changePassword.changePasswordActivity" />
-        <activity android:name=".modules.updateAboutMe.updateAboutMeActivity"></activity>
+        <activity android:name=".modules.updateAboutMe.updateAboutMeActivity" />
+        <activity android:name=".modules.loadTaskHistory.taskHistoryActivity"></activity>
     </application>
 
 </manifest>
