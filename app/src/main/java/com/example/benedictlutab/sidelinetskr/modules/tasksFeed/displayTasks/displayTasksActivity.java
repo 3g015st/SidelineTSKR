@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -54,6 +55,9 @@ public class displayTasksActivity extends Activity
     private adapterDisplayTasks adapterDisplayTasks;
 
     private String SKILL;
+
+    @BindView(R.id.llShow) LinearLayout llShow;
+    @BindView(R.id.llEmpty) LinearLayout llEmpty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -141,13 +145,15 @@ public class displayTasksActivity extends Activity
 
         if (listSize == 0)
         {
-            Log.e("initRecyclerView: ", "GONE-VISIBLE");
-            recyclerView.setVisibility(View.GONE);
+            Log.e("initRecyclerView: ", "No tasks loaded!");
+            llShow.setVisibility(View.GONE);
+            llEmpty.setVisibility(View.VISIBLE);
         }
         else
         {
-            Log.e("initRecyclerView: ", "VISIBLE-GONE");
-            recyclerView.setVisibility(View.VISIBLE);
+            Log.e("initRecyclerView: ", "Tasks are loaded!");
+            llShow.setVisibility(View.VISIBLE);
+            llEmpty.setVisibility(View.GONE);
         }
 
         tvSkillName.setText(SKILL +" ("+Integer.toString(listSize)+")");

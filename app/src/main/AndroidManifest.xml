@@ -65,7 +65,8 @@
 
         <activity
             android:name=".modules.showNearbyTasks.nearbyTasksActivity"
-            android:label="@string/title_activity_nearby_tasks"></activity>
+            android:label="@string/title_activity_nearby_tasks" />
+        <activity android:name=".modules.loadTaskHistory.taskHistoryDetailsActivity"></activity>
     </application>
 
 </manifest>
