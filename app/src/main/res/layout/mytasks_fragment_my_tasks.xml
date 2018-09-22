@@ -6,7 +6,9 @@
     android:background="@color/colorBGSecondary"
     tools:context=".modules.myTasks.myTasksFragment">
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/llShow"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -34,9 +36,34 @@
             android:layout_gravity="center"
             android:layout_marginBottom="45dp" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
-
+    <!--IF EMPTY-->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:id="@+id/llEmpty">
+        <ImageView
+            android:layout_marginTop="25dp"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_gravity="center"
+            android:background="@drawable/main_img_empty_task"/>
+        <TextView
+            android:id="@+id/tvEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="You have no tasks posted or assigned yet!, Be assigned to get started :)"
+            android:textSize="16sp"
+            android:textColor="@color/colorFontPrimary"
+            android:layout_gravity="top"
+            android:layout_marginTop="15dp"
+            android:layout_margin="35dp"/>
+    </LinearLayout>
 
 
 </FrameLayout>

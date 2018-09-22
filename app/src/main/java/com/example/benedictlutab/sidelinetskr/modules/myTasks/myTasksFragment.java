@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -42,6 +43,10 @@ public class myTasksFragment extends Fragment
 {
     @BindView(R.id.rv_mytasks) RecyclerView recyclerView;
     @BindView(R.id.tvItems) TextView tvItems;
+    @BindView(R.id.tvEmpty) TextView tvEmpty;
+
+    @BindView(R.id.llShow) LinearLayout llShow;
+    @BindView(R.id.llEmpty) LinearLayout llEmpty;
 
     private View rootView;
     private int listSize;
@@ -81,6 +86,7 @@ public class myTasksFragment extends Fragment
         // Change Font Style.
         Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/avenir.otf");
         tvItems.setTypeface(font);
+        tvEmpty.setTypeface(font);
 
         // Behave like ViewPager
         PagerSnapHelper snapHelper = new PagerSnapHelper();
@@ -93,19 +99,23 @@ public class myTasksFragment extends Fragment
 
     private void initRecyclerView()
     {
+        Log.e("initRecyclerView: ", "STARTED!");
+
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
         adapterMyTasks adapterMyTasks = new adapterMyTasks(getActivity(), taskList);
         recyclerView.setAdapter(adapterMyTasks);
         if (listSize == 0)
         {
-            Log.e("initRecyclerView: ", "GONE-VISIBLE");
-            recyclerView.setVisibility(View.GONE);
+            Log.e("initRecyclerView: ", "No tasks loaded!");
+            llShow.setVisibility(View.GONE);
+            llEmpty.setVisibility(View.VISIBLE);
         }
         else
         {
-            Log.e("initRecyclerView: ", "VISIBLE-GONE");
-            recyclerView.setVisibility(View.VISIBLE);
+            Log.e("initRecyclerView: ", "Tasks are loaded!");
+            llShow.setVisibility(View.VISIBLE);
+            llEmpty.setVisibility(View.GONE);
 
             recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener()
             {

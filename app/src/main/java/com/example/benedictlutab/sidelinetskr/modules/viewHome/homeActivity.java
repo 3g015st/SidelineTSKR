@@ -18,6 +18,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.benedictlutab.sidelinetskr.R;
 import com.example.benedictlutab.sidelinetskr.helpers.apiRouteUtil;
+import com.example.benedictlutab.sidelinetskr.modules.messages.loadChatRooms.chatRoomsFragment;
 import com.example.benedictlutab.sidelinetskr.modules.more.moreFragment;
 import com.example.benedictlutab.sidelinetskr.modules.myTasks.myTasksFragment;
 import com.example.benedictlutab.sidelinetskr.modules.tasksFeed.displaySkills.displaySkillsFragment;
@@ -67,7 +68,8 @@ public class homeActivity extends AppCompatActivity
                         fetchBalance();
                         break;
                     case R.id.action_messages:
-
+                        fragmentManager.beginTransaction().replace(R.id.frmlayout_fragment, chatRoomsFragment.newInstance()).commit();
+                        fetchBalance();
                         break;
                     case R.id.action_tasks:
                         fragmentManager.beginTransaction().replace(R.id.frmlayout_fragment, myTasksFragment.newInstance()).commit();
