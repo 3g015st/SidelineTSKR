@@ -2,6 +2,7 @@ package com.example.benedictlutab.sidelinetskr.modules.tasksFeed.displaySkills;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -21,7 +22,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.benedictlutab.sidelinetskr.R;
 import com.example.benedictlutab.sidelinetskr.helpers.apiRouteUtil;
+import com.example.benedictlutab.sidelinetskr.helpers.fontStyleCrawler;
 import com.example.benedictlutab.sidelinetskr.models.Skill;
+import com.example.benedictlutab.sidelinetskr.modules.showNearbyTasks.nearbyTasksActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +37,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,7 +45,7 @@ import butterknife.ButterKnife;
 public class displaySkillsFragment extends Fragment
 {
     @BindView(R.id.rv_skillset) RecyclerView recyclerView;
-    @BindView(R.id.tvTitle) TextView tvTitle;
+    @BindView(R.id.tvNearbyTasks) TextView tvNearbyTasks;
 
     private View rootView;
     private List<Skill> skillList = new ArrayList<>();
@@ -79,13 +83,27 @@ public class displaySkillsFragment extends Fragment
             Log.e("USER_ID: ", USER_ID);
         }
 
-        // Change Font Style.
-        Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/avenir.otf");
-        tvTitle.setTypeface(font);
-
         fetchSkills();
 
         return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState)
+    {
+        super.onActivityCreated(savedInstanceState);
+
+        fontStyleCrawler fontStyleCrawler = new fontStyleCrawler(getActivity().getAssets(), "fonts/avenir.otf");
+        fontStyleCrawler.replaceFonts((ViewGroup) this.getView());
+    }
+
+    @OnClick(R.id.tvNearbyTasks)
+    public void showNearbyTasks()
+    {
+        Log.e("showNearbyTasks: ", "Show nearby tasks activity");
+
+        Intent intent = new Intent(getActivity(), nearbyTasksActivity.class);
+        startActivity(intent);
     }
 
     private void initRecyclerView()

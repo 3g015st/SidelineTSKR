@@ -2,11 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBGSecondary"
     tools:context=".modules.tasksFeed.displaySkills.displaySkillsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
         <!--App Bar/Title Bar-->
         <android.support.design.widget.AppBarLayout
@@ -40,6 +41,24 @@
             tools:layout_editor_absoluteX="745dp"
             tools:layout_editor_absoluteY="-51dp">
         </android.support.v7.widget.RecyclerView>
-
     </LinearLayout>
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="40dp"
+        android:layout_height="wrap_content"
+        android:background="#37474f">
+        <TextView
+            android:id="@+id/tvNearbyTasks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
+            android:layout_weight="1.0"
+            android:text="Show Available Nearby Tasks"
+            android:textAllCaps="true"
+            android:textColor="@color/colorFontPrimary"
+            android:textSize="17sp" />
+    </android.support.design.widget.AppBarLayout>
 </FrameLayout>

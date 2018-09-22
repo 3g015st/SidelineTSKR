@@ -66,6 +66,9 @@ public class homeActivity extends AppCompatActivity
                         fragmentManager.beginTransaction().replace(R.id.frmlayout_fragment, displaySkillsFragment.newInstance()).commit();
                         fetchBalance();
                         break;
+                    case R.id.action_messages:
+
+                        break;
                     case R.id.action_tasks:
                         fragmentManager.beginTransaction().replace(R.id.frmlayout_fragment, myTasksFragment.newInstance()).commit();
                         fetchBalance();

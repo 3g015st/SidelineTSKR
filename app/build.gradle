@@ -57,4 +57,12 @@ dependencies {
     implementation 'com.github.stfalcon:smsverifycatcher:0.3.2'
     // Rating Bar
     implementation 'com.github.ome450901:SimpleRatingBar:1.4.2'
+    //Google Play Services - MAPS
+    implementation 'com.google.android.gms:play-services-maps:11.8.0'
+    //Google Play Services - LOCATION
+    implementation 'com.google.android.gms:play-services-location:11.8.0'
+    //Google Play Services - PLACES
+    implementation 'com.google.android.gms:play-services-places:11.8.0'
+    //Google Play Services - MAPS (UTILS)
+    implementation 'com.google.maps.android:android-maps-utils:0.5+'
 }
