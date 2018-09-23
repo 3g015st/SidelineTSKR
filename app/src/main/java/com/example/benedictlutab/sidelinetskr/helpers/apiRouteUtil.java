@@ -23,6 +23,9 @@ public class apiRouteUtil
     public String URL_CHANGE_PASS           = DOMAIN + "api/common/changePassword.php";
     public String URL_FETCH_TASK_HISTORY    = DOMAIN + "api/common/fetchTaskHistory.php";
     public String URL_LOAD_CHAT_ROOMS       = DOMAIN + "api/common/loadChatRooms.php";
+    public String URL_LOAD_TASK_HIST_DTLS   = DOMAIN + "api/common/loadTaskHistoryDetails.php";
+    public String URL_FETCH_COMP_CAT        = DOMAIN + "api/common/fetchComplaintCategories.php";
+    public String URL_SEND_COMPLAINT        = DOMAIN + "api/common/sendComplaint.php";
 
     public String URL_MY_SKILLS             = DOMAIN + "api/tasker/mySkills.php";
     public String URL_AVAILABLE_TASKS       = DOMAIN + "api/tasker/availableTasks.php";

@@ -40,6 +40,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.maps.android.SphericalUtil;
+import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -251,8 +252,13 @@ public class nearbyTasksActivity extends AppCompatActivity implements OnMapReady
                     {
                         final JSONObject jsonObject = jsonArray.getJSONObject(x);
 
+                        Double LATITUDE = Double.parseDouble(jsonObject.getString("latitude"));
+                        Double LONGITUDE = Double.parseDouble(jsonObject.getString("longitude"));
+
+                        Log.e("Task's LAT-LONG: ", String.valueOf(LATITUDE) +", "+ String.valueOf(LONGITUDE));
+
                         Marker marker = mMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(Float.parseFloat(jsonObject.getString("latitude")), Float.parseFloat(jsonObject.getString("longitude"))))
+                                .position(new LatLng(LATITUDE, LONGITUDE))
                                 .title(jsonObject.getString("title")).snippet("Fee: PHP " + jsonObject.getString("task_fee")).icon(BitmapDescriptorFactory.fromResource(R.drawable.main_img_pin_logo)));
 
                         // Set the tag to task id
@@ -269,6 +275,10 @@ public class nearbyTasksActivity extends AppCompatActivity implements OnMapReady
                         {
                             Log.e("isNearbyTask: ", "TRUE");
                             marker.setVisible(true);
+                        }
+                        else
+                        {
+                            promptNoNearby();
                         }
 
                         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener()
@@ -335,5 +345,20 @@ public class nearbyTasksActivity extends AppCompatActivity implements OnMapReady
             }
             mMap.setMyLocationEnabled(true);
         }
+    }
+
+    private void promptNoNearby()
+    {
+        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE).setTitleText("No nearby tasks").setContentText("We're sorry but there are no nearby tasks available :(")
+                .setConfirmText("OK")
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener()
+                {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog)
+                    {
+                        finish();
+                    }
+                })
+                .show();
     }
 }

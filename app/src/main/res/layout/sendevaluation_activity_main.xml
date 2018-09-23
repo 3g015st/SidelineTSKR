@@ -126,8 +126,7 @@
                     android:layout_margin="15dp"
                     android:gravity="center"
                     android:singleLine="false"
-                    android:text="REVIEW"
-                    android:textAllCaps="true"
+                    android:text="Review"
                     android:textColor="@color/colorFontPrimary"
                     android:textSize="16sp" />
 

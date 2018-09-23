@@ -51,6 +51,7 @@
         <activity android:name=".modules.changePassword.changePasswordActivity" />
         <activity android:name=".modules.updateAboutMe.updateAboutMeActivity" />
         <activity android:name=".modules.loadTaskHistory.taskHistoryActivity" />
+        <activity android:name=".modules.sendComplaintReport.complaintReportActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

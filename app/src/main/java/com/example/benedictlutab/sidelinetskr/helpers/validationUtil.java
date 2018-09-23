@@ -67,4 +67,16 @@ public class validationUtil
         else
             return true;
     }
+
+    public boolean isValidComplaint(EditText text)
+    {
+        String complaint = text.getText().toString();
+
+        if(complaint.length() < 40)
+        {
+            return false;
+        }
+        else
+            return true;
+    }
 }
