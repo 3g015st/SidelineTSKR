@@ -303,7 +303,13 @@ public class taskDetailsActivity extends AppCompatActivity
                         tvTaskAddress.setText(jsonObject.getString("line_one") +", "+ jsonObject.get("city"));
                         tvTaskDueDate.setText(jsonObject.getString("due_date"));
                         tvTaskCategory.setText(jsonObject.getString("category_name"));
-                        tvTaskFee.setText("PHP " + jsonObject.getString("task_fee"));
+
+                        // COMPUTE OVERALL TASK FEE
+                        COMM_FEE = jsonObject.getString("comm_fee");
+                        Log.e("COMM_FEE: ", COMM_FEE);
+
+                        Float TOTAL_FEE = Float.parseFloat(COMM_FEE) + Float.parseFloat(jsonObject.getString("task_fee"));
+                        tvTaskFee.setText("PHP " + String.valueOf(TOTAL_FEE));
 
                         TASKER_ID = jsonObject.getString("tasker_id");
                         Log.e("TASKER_ID: ", TASKER_ID);
@@ -313,9 +319,6 @@ public class taskDetailsActivity extends AppCompatActivity
 
                         STATUS = jsonObject.getString("status");
                         tvTaskStatus.setText(STATUS);
-
-                        COMM_FEE = jsonObject.getString("comm_fee");
-                        Log.e("COMM_FEE: ", COMM_FEE);
 
                         // Fetch task photos
                         taskImages[0] = jsonObject.getString("image_one");
