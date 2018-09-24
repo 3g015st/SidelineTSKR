@@ -112,6 +112,30 @@
                             android:textSize="16sp"
                             android:textColor="@color/colorFontPrimary"
                             android:textAllCaps="true"
+                            android:text="About Me" />
+
+                        <TextView
+                            android:id="@+id/tvShortBio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:text="Short Bio Here"
+                            android:autoLink="web|email"
+                            android:linksClickable="true"
+                            android:textColor="@color/colorFontPrimary"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:background="#546E7A"
+                            android:clickable="true"
+                            android:elevation="10dp"
+                            android:padding="15dp"
+                            android:textSize="16sp"
+                            android:textColor="@color/colorFontPrimary"
+                            android:textAllCaps="true"
                             android:text="Details" />
 
                         <!--CITY-->

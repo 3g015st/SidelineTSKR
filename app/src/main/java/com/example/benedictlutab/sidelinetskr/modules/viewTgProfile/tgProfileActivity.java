@@ -49,6 +49,8 @@ public class tgProfileActivity extends AppCompatActivity
     @BindView(R.id.tvCity) TextView tvCity;
     @BindView(R.id.tvGender) TextView tvGender;
     @BindView(R.id.tvAge) TextView tvAge;
+    @BindView(R.id.tvAverageRating) TextView tvAverageRating;
+
 
     final apiRouteUtil apiRouteUtil = new apiRouteUtil();
 
@@ -153,6 +155,8 @@ public class tgProfileActivity extends AppCompatActivity
                         tvCity.setText(jsonObject.getString("city")+ " City");
                         tvAge.setText(jsonObject.getString("age")+" years old");
                         tvGender.setText(jsonObject.getString("gender"));
+
+                        tvAverageRating.setText(jsonObject.getString("avg_rating") +" "+ "Average Rating");
                     }
                 }
                 catch (JSONException e)

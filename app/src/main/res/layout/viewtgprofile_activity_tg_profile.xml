@@ -117,13 +117,13 @@
                             android:textSize="14sp" />
 
                         <TextView
-                            android:id="@+id/tvCompleted"
+                            android:id="@+id/tvAverageRating"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/tvMemberSince"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="8dp"
-                            android:text="100 Completed | 4.5 Rating | 100% Completion Rate"
+                            android:text="0.0 Average Rating"
                             android:textColor="#fff"
                             android:textSize="13sp" />
                     </RelativeLayout>
@@ -227,24 +227,6 @@
 
             </android.support.v4.widget.NestedScrollView>
 
-            <!--REPORT THIS TASK GIVER-->
-            <android.support.design.widget.AppBarLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#455A64">
-
-                <TextView
-                    android:id="@+id/tvReport"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="8dp"
-                    android:layout_weight="1.0"
-                    android:text="Report this task giver"
-                    android:textAllCaps="true"
-                    android:textColor="#ef5350"
-                    android:textSize="19sp" />
-            </android.support.design.widget.AppBarLayout>
 
         </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>

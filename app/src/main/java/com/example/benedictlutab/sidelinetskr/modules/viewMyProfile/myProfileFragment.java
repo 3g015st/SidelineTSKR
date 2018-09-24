@@ -60,6 +60,7 @@ public class myProfileFragment extends Fragment
     @BindView(R.id.tvCity) TextView tvCity;
     @BindView(R.id.tvGender) TextView tvGender;
     @BindView(R.id.tvAge) TextView tvAge;
+    @BindView(R.id.tvShortBio) TextView tvShortBio;
     @BindView(R.id.tvAverageRating) TextView tvAverageRating;
     @BindView(R.id.tvNoLatestReviews) TextView tvNoLatestReviews;
 
@@ -188,6 +189,7 @@ public class myProfileFragment extends Fragment
                         tvCity.setText(jsonObject.getString("city"));
                         tvAge.setText(jsonObject.getString("age")+" years old");
                         tvGender.setText(jsonObject.getString("gender"));
+                        tvShortBio.setText(jsonObject.getString("short_bio"));
                     }
                 }
                 catch (JSONException e)
