@@ -76,6 +76,7 @@ public class taskHistoryDetailsActivity extends AppCompatActivity
     @BindView(R.id.tvReview) TextView tvReview;
     @BindView(R.id.etReviewTG) EditText etReviewTG;
 
+
     private String TASK_ID, TASK_GIVER_ID, USER_ID, REVIEW, sendRating;
     private float RATING;
     private SharedPreferences sharedPreferences;
