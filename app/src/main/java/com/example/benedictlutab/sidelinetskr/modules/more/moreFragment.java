@@ -52,6 +52,7 @@ public class moreFragment extends Fragment
     private void initItemNames()
     {
         Log.d("moreFragment","initItemNames: on");
+        arrlistItemNames.add("Dashboard");
         arrlistItemNames.add("eWallet");
         arrlistItemNames.add("Change Password");
         arrlistItemNames.add("Update About Me");

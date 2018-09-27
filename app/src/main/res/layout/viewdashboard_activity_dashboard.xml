@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/colorBGSecondary"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.benedictlutab.sidelinetskr.modules.viewDashboard.dashboardActivity">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipeRefLayout_id"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--App Bar/Title Bar-->
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="top"
+                android:background="@color/colorPrimaryLight"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnBack"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/main_img_back" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="20dp"
+                        android:text="Dashboard"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorFontPrimary"
+                        android:textSize="19sp" />
+                </LinearLayout>
+            </android.support.design.widget.AppBarLayout>
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+            <!--MAIN CONTENT-->
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_marginTop="10sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="Earnings"
+                    android:textAllCaps="true"
+                    android:textColor="#bdbdbd"
+                    android:textSize="19sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5sp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvWeek"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="17sp"
+                        android:text="This Week"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorFontPrimary"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/tvMonth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="17sp"
+                        android:text="This Month"
+                        android:textAlignment="center"
+                        android:textColor="#616161"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/tvYear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="17sp"
+                        android:text="This Year"
+                        android:textAlignment="center"
+                        android:textColor="#616161"
+                        android:textSize="17sp" />
+
+                </LinearLayout>
+
+                <!--WEEK BAR CHART-->
+                <RelativeLayout
+                    android:orientation="vertical"
+                    android:background="#37474f"
+                    android:id="@+id/llWeek"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:layout_margin="10sp"
+                        android:id="@+id/bcSales"
+                        android:layout_width="match_parent"
+                        android:layout_height="350sp">
+                    </com.github.mikephil.charting.charts.BarChart>
+                </RelativeLayout>
+                <TextView
+                    android:id="@+id/tvTotal"
+                    android:padding="5sp"
+                    android:background="#212121"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TOTAL EARNINGS: PHP 25000"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorFontPrimary"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            </android.support.v4.widget.NestedScrollView>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>
+
+
+

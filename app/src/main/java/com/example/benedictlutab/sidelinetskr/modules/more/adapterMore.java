@@ -16,6 +16,7 @@ import com.example.benedictlutab.sidelinetskr.modules.changePassword.changePassw
 import com.example.benedictlutab.sidelinetskr.modules.loadTaskHistory.taskHistoryActivity;
 import com.example.benedictlutab.sidelinetskr.modules.login.loginActivity;
 import com.example.benedictlutab.sidelinetskr.modules.updateAboutMe.updateAboutMeActivity;
+import com.example.benedictlutab.sidelinetskr.modules.viewDashboard.dashboardActivity;
 import com.example.benedictlutab.sidelinetskr.modules.wallet.myWallet.myWalletActivity;
 import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -74,26 +75,30 @@ public class adapterMore extends RecyclerView.Adapter<adapterMore.ViewHolder>
         switch(position)
         {
             case 0:
-                intent = new Intent(context, myWalletActivity.class);
+                intent = new Intent(context, dashboardActivity.class);
                 context.startActivity(intent);
                 break;
             case 1:
-                intent = new Intent(context, changePasswordActivity.class);
+                intent = new Intent(context, myWalletActivity.class);
                 context.startActivity(intent);
                 break;
             case 2:
-                intent = new Intent(context, updateAboutMeActivity.class);
+                intent = new Intent(context, changePasswordActivity.class);
                 context.startActivity(intent);
                 break;
             case 3:
-                intent = new Intent(context, taskHistoryActivity.class);
+                intent = new Intent(context, updateAboutMeActivity.class);
                 context.startActivity(intent);
                 break;
             case 4:
+                intent = new Intent(context, taskHistoryActivity.class);
+                context.startActivity(intent);
                 break;
             case 5:
                 break;
             case 6:
+                break;
+            case 7:
                 Log.e("goToActivity: ", "SIGNED OUT!");
                 displaySignoutDialog();
                 break;

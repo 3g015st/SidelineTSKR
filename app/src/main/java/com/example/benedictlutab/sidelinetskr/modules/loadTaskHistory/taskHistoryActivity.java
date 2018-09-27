@@ -106,7 +106,6 @@ public class taskHistoryActivity extends AppCompatActivity
         else
         {
             Log.e("initRecyclerView: ", "VISIBLE-GONE");
-            rv_taskhistory.setVisibility(View.VISIBLE);
             llShow.setVisibility(View.VISIBLE);
             llEmpty.setVisibility(View.GONE);
         }
