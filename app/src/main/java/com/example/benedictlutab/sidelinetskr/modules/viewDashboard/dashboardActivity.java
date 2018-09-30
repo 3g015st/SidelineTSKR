@@ -201,7 +201,7 @@ import butterknife.OnClick;
 //                        GET TOTAL EARNINGS
                         if(jsonObject.has("total"))
                         {
-                            tvTotal.setText("TOTAL EARNINGS: PHP " + jsonObject.getString("total"));
+                            tvTotal.setText("TOTAL EARNINGS: " + jsonObject.getString("total"));
                         }
 
 

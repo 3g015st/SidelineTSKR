@@ -2,6 +2,7 @@ package com.example.benedictlutab.sidelinetskr.modules.more;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.benedictlutab.sidelinetskr.helpers.apiRouteUtil;
 import com.example.benedictlutab.sidelinetskr.helpers.fontStyleCrawler;
 import com.example.benedictlutab.sidelinetskr.R;
 import com.example.benedictlutab.sidelinetskr.modules.changePassword.changePasswordActivity;
@@ -95,6 +97,9 @@ public class adapterMore extends RecyclerView.Adapter<adapterMore.ViewHolder>
                 context.startActivity(intent);
                 break;
             case 5:
+                apiRouteUtil apiRouteUtil = new apiRouteUtil();
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(apiRouteUtil.URL_TERMS));
+                context.startActivity(browserIntent);
                 break;
             case 6:
                 break;

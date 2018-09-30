@@ -1,6 +1,7 @@
 package com.example.benedictlutab.sidelinetskr.modules.viewMyProfile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +26,7 @@ import com.example.benedictlutab.sidelinetskr.helpers.apiRouteUtil;
 import com.example.benedictlutab.sidelinetskr.helpers.fontStyleCrawler;
 import com.example.benedictlutab.sidelinetskr.models.Evaluation;
 import com.example.benedictlutab.sidelinetskr.models.Skill;
+import com.example.benedictlutab.sidelinetskr.modules.viewEvaluation.evaluationActivity;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -39,6 +42,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.picasso.transformations.BlurTransformation;
 
@@ -63,6 +67,8 @@ public class myProfileFragment extends Fragment
     @BindView(R.id.tvShortBio) TextView tvShortBio;
     @BindView(R.id.tvAverageRating) TextView tvAverageRating;
     @BindView(R.id.tvNoLatestReviews) TextView tvNoLatestReviews;
+
+    @BindView(R.id.btnViewReviews) Button btnViewReviews;
 
     apiRouteUtil apiRouteUtil = new apiRouteUtil();
 
@@ -303,6 +309,7 @@ public class myProfileFragment extends Fragment
                 Map<String, String> Parameter = new HashMap<String, String>();
 
                 Parameter.put("receiver_id", USER_ID);
+                Parameter.put("SWITCH", "LATEST");
 
                 return Parameter;
             }
@@ -390,5 +397,12 @@ public class myProfileFragment extends Fragment
 
         // Add the StringRequest to Queue.
         Volley.newRequestQueue(getActivity()).add(stringRequest);
+    }
+
+    @OnClick(R.id.btnViewReviews)
+    public void viewEval()
+    {
+        Intent intent = new Intent(getActivity(), evaluationActivity.class);
+        startActivity(intent);
     }
 }

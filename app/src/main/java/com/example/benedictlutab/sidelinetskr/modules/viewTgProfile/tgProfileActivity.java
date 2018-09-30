@@ -51,6 +51,8 @@ public class tgProfileActivity extends AppCompatActivity
     @BindView(R.id.tvAge) TextView tvAge;
     @BindView(R.id.tvAverageRating) TextView tvAverageRating;
 
+    @BindView(R.id.tvNoLatestReviews) TextView tvNoLatestReviews;
+
 
     final apiRouteUtil apiRouteUtil = new apiRouteUtil();
 
@@ -208,11 +210,13 @@ public class tgProfileActivity extends AppCompatActivity
         {
             Log.d("initRecyclerView: ", "GONE-VISIBLE");
             rv_featuredrevs.setVisibility(View.GONE);
+            tvNoLatestReviews.setVisibility(View.VISIBLE);
         }
         else
         {
             Log.d("initRecyclerView: ", "VISIBLE-GONE");
             rv_featuredrevs.setVisibility(View.VISIBLE);
+            tvNoLatestReviews.setVisibility(View.GONE);
         }
     }
 
@@ -268,6 +272,7 @@ public class tgProfileActivity extends AppCompatActivity
                 Map<String, String> Parameter = new HashMap<String, String>();
 
                 Parameter.put("receiver_id", USER_ID);
+                Parameter.put("SWITCH", "LATEST");
 
                 return Parameter;
             }

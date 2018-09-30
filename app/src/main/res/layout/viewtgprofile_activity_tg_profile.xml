@@ -212,6 +212,14 @@
                             tools:layout_editor_absoluteX="745dp"
                             tools:layout_editor_absoluteY="-51dp">
                         </android.support.v7.widget.RecyclerView>
+                        <TextView
+                            android:id="@+id/tvNoLatestReviews"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:text="There are no latest reviews to be displayed."
+                            android:textColor="@color/colorFontPrimary"
+                            android:textSize="15sp" />
                         <Button
                             android:id="@+id/btnViewReviews"
                             android:layout_width="match_parent"
