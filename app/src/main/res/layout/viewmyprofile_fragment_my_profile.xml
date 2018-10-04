@@ -287,6 +287,39 @@
                             tools:layout_editor_absoluteY="-51dp">
                         </android.support.v7.widget.RecyclerView>
 
+                        <!--BADGES-->
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:background="#546E7A"
+                            android:clickable="true"
+                            android:elevation="10dp"
+                            android:padding="15dp"
+                            android:textSize="16sp"
+                            android:textColor="@color/colorFontPrimary"
+                            android:textAllCaps="true"
+                            android:text="BADGES" />
+                        <android.support.v7.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:id="@+id/rv_badges"
+                            android:layout_gravity="center|top"
+                            android:overScrollMode="never"
+                            android:layout_marginTop="5dp"
+                            tools:layout_editor_absoluteX="745dp"
+                            tools:layout_editor_absoluteY="-51dp">
+                        </android.support.v7.widget.RecyclerView>
+
+                        <TextView
+                            android:id="@+id/tvNoBadges"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:text="There are no badges to be displayed."
+                            android:textColor="@color/colorFontPrimary"
+                            android:textSize="15sp" />
+
                     </LinearLayout>
                 </RelativeLayout>
 

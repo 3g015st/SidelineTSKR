@@ -309,7 +309,6 @@ public class taskDetailsActivity extends AppCompatActivity
                         Log.e("COMM_FEE: ", COMM_FEE);
 
                         Float TOTAL_FEE = Float.parseFloat(COMM_FEE) + Float.parseFloat(jsonObject.getString("task_fee"));
-                        tvTaskFee.setText("PHP " + String.valueOf(TOTAL_FEE));
 
                         TASKER_ID = jsonObject.getString("tasker_id");
                         Log.e("TASKER_ID: ", TASKER_ID);
@@ -319,6 +318,17 @@ public class taskDetailsActivity extends AppCompatActivity
 
                         STATUS = jsonObject.getString("status");
                         tvTaskStatus.setText(STATUS);
+
+                        if(STATUS.equals("AVAILABLE"))
+                        {
+                            Log.e("TASL FEE:", "NO COMM FEE");
+                            tvTaskFee.setText("PHP " + jsonObject.getString("task_fee"));
+                        }
+                        else
+                        {
+                            Log.e("TASL FEE:", "WITH COMM FEE");
+                            tvTaskFee.setText("PHP " + String.valueOf(TOTAL_FEE));
+                        }
 
                         // Fetch task photos
                         taskImages[0] = jsonObject.getString("image_one");

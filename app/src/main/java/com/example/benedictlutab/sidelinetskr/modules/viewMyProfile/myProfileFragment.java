@@ -24,6 +24,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.benedictlutab.sidelinetskr.R;
 import com.example.benedictlutab.sidelinetskr.helpers.apiRouteUtil;
 import com.example.benedictlutab.sidelinetskr.helpers.fontStyleCrawler;
+import com.example.benedictlutab.sidelinetskr.models.Badge;
 import com.example.benedictlutab.sidelinetskr.models.Evaluation;
 import com.example.benedictlutab.sidelinetskr.models.Skill;
 import com.example.benedictlutab.sidelinetskr.modules.viewEvaluation.evaluationActivity;
@@ -67,6 +68,7 @@ public class myProfileFragment extends Fragment
     @BindView(R.id.tvShortBio) TextView tvShortBio;
     @BindView(R.id.tvAverageRating) TextView tvAverageRating;
     @BindView(R.id.tvNoLatestReviews) TextView tvNoLatestReviews;
+    @BindView(R.id.tvNoBadges) TextView tvNoBadges;
 
     @BindView(R.id.btnViewReviews) Button btnViewReviews;
 
@@ -86,6 +88,13 @@ public class myProfileFragment extends Fragment
     private adapterDisplaySkills adapterDisplaySkills;
 
     private int lsSkills;
+
+    @BindView(R.id.rv_badges) RecyclerView rvBadges;
+    private List<Badge> badgeList = new ArrayList<>();
+    private adapterBadges adapterBadges;
+
+    private int lsBadges;
+
 
     public static myProfileFragment newInstance()
     {
@@ -141,6 +150,7 @@ public class myProfileFragment extends Fragment
                 fetchMyDetails();
                 fetchEvalList();
                 fetchSkills();
+                fetchBadges();
             }
         });
         swipeRefLayout.setColorSchemeResources(R.color.colorPrimaryDark, android.R.color.holo_green_dark, android.R.color.holo_orange_dark, android.R.color.holo_blue_dark);
@@ -155,6 +165,7 @@ public class myProfileFragment extends Fragment
                 fetchMyDetails();
                 fetchEvalList();
                 fetchSkills();
+                fetchBadges();
 
                 swipeRefLayout.setRefreshing(false);
             }
@@ -366,6 +377,90 @@ public class myProfileFragment extends Fragment
                         Log.e("lsSkills: ", String.valueOf(lsSkills));
                     }
                     initrvSkills();
+                }
+                catch (JSONException e)
+                {
+                    e.printStackTrace();
+                    Log.e("Catch Response: ", e.toString());
+                }
+            }
+        },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError)
+                    {
+                        Log.e("Error Response: ", volleyError.toString());
+                    }
+                })
+        {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                // Creating Map String Params.
+                Map<String, String> Parameter = new HashMap<String, String>();
+
+                Parameter.put("tasker_id", USER_ID);
+
+                return Parameter;
+            }
+        };
+
+        // Add the StringRequest to Queue.
+        Volley.newRequestQueue(getActivity()).add(stringRequest);
+    }
+
+    private void initrvBadges()
+    {
+        Log.d("initrvBadges: ", String.valueOf(lsBadges));
+
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        rvBadges.setLayoutManager(layoutManager);
+
+        adapterBadges = new adapterBadges(getActivity(), badgeList);
+        rvBadges.setAdapter(adapterBadges);
+
+        if (lsBadges == 0)
+        {
+            Log.e("initRecyclerView: ", "GONE-VISIBLE");
+            rvBadges.setVisibility(View.GONE);
+            tvNoBadges.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            Log.e("initRecyclerView: ", "VISIBLE-GONE");
+            rvBadges.setVisibility(View.VISIBLE);
+            tvNoBadges.setVisibility(View.GONE);
+        }
+    }
+
+    private void fetchBadges()
+    {
+        Log.e("fetchBadges: ", "STARTED!");
+        badgeList.clear();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, apiRouteUtil.URL_LOAD_BADGE, new Response.Listener<String>()
+        {
+            @Override
+            public void onResponse(String ServerResponse)
+            {
+                try
+                {
+                    Log.e("SERVER RESPONSE: ", ServerResponse);
+                    JSONArray jsonArray = new JSONArray(ServerResponse);
+                    for(int x = 0; x < jsonArray.length(); x++)
+                    {
+                        JSONObject jsonObject = jsonArray.getJSONObject(x);
+                        // Adding the jsonObject to the List.
+                        badgeList.add(new Badge(jsonObject.getString("badge_id"),
+                                jsonObject.getString("name"),
+                                jsonObject.getString("description"),
+                                jsonObject.getString("image")));
+                        lsBadges = badgeList.size();
+                        Log.e("lsBadges: ", String.valueOf(lsBadges));
+                    }
+                    initrvBadges();
                 }
                 catch (JSONException e)
                 {

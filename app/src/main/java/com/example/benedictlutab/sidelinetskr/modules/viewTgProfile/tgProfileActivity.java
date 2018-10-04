@@ -1,5 +1,6 @@
 package com.example.benedictlutab.sidelinetskr.modules.viewTgProfile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +22,7 @@ import com.example.benedictlutab.sidelinetskr.R;
 import com.example.benedictlutab.sidelinetskr.helpers.apiRouteUtil;
 import com.example.benedictlutab.sidelinetskr.helpers.fontStyleCrawler;
 import com.example.benedictlutab.sidelinetskr.models.Evaluation;
+import com.example.benedictlutab.sidelinetskr.modules.viewEvaluation.evaluationActivity;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -53,6 +56,8 @@ public class tgProfileActivity extends AppCompatActivity
 
     @BindView(R.id.tvNoLatestReviews) TextView tvNoLatestReviews;
 
+    @BindView(R.id.btnViewReviews)
+    Button btnViewReviews;
 
     final apiRouteUtil apiRouteUtil = new apiRouteUtil();
 
@@ -280,5 +285,13 @@ public class tgProfileActivity extends AppCompatActivity
 
         // Add the StringRequest to Queue.
         Volley.newRequestQueue(getApplicationContext()).add(stringRequest);
+    }
+
+    @OnClick(R.id.btnViewReviews)
+    public void viewEval()
+    {
+        Intent intent = new Intent(this, evaluationActivity.class);
+        intent.putExtra("USER_ID", USER_ID);
+        startActivity(intent);
     }
 }

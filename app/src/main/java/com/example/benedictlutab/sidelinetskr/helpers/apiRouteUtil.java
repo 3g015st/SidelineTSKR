@@ -44,7 +44,8 @@ public class apiRouteUtil
     public String URL_GET_OFFER_COUNT       = DOMAIN + "api/tasker/getNumOffers.php";
     public String URL_UPDATE_SHORT_BIO      = DOMAIN + "api/tasker/updateAboutMe.php";
     public String URL_GET_ALL_POINTS        = DOMAIN + "api/tasker/getAllPoints.php";
-    public String URL_FETCH_EARNINGS      = DOMAIN + "api/tasker/loadEarnings.php";
+    public String URL_FETCH_EARNINGS        = DOMAIN + "api/tasker/loadEarnings.php";
+    public String URL_LOAD_BADGE            = DOMAIN + "api/tasker/loadBadges.php";
 
     public String URL_GET_TOKEN             = DOMAIN + "api/braintree/main.php";
     public String URL_CHECKOUT              = DOMAIN + "api/braintree/checkout.php";
