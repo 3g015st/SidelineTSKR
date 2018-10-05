@@ -276,7 +276,7 @@ public class nearbyTasksActivity extends AppCompatActivity implements OnMapReady
                             Log.e("isNearbyTask: ", "TRUE");
                             marker.setVisible(true);
                         }
-                        else
+                        else if(ServerResponse.isEmpty())
                         {
                             promptNoNearby();
                         }
@@ -319,7 +319,7 @@ public class nearbyTasksActivity extends AppCompatActivity implements OnMapReady
                 // Creating Map String Params.
                 Map<String, String> Parameter = new HashMap<String, String>();
 
-                Parameter.put("STATUS", "COMPLETED");
+                Parameter.put("STATUS", "AVAILABLE");
 
                 return Parameter;
             }

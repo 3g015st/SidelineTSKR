@@ -8,10 +8,10 @@ public class apiRouteUtil
 {
     // Set domain
 //      public String DOMAIN = "http://192.168.0.101/Sideline/";
-//    public String DOMAIN = "http://192.168.43.218/Sideline//admin_area/";
+    public String DOMAIN = "http://192.168.43.218/Sideline//admin_area/";
 //    public String DOMAIN = "http://192.168.0.101/Sideline/admin_area/";
 //    public String DOMAIN = "http://192.168.0.36/Sideline/";
-    public String DOMAIN = "http://192.168.1.9/Sideline/admin_area/";
+//    public String DOMAIN = "http://192.168.1.9/Sideline/admin_area/";
 
     // Routes
     public String URL_LOGIN                 = DOMAIN + "api/common/login.php";

@@ -13,6 +13,7 @@ import com.example.benedictlutab.sidelinetskr.R;
 import com.example.benedictlutab.sidelinetskr.helpers.apiRouteUtil;
 import com.example.benedictlutab.sidelinetskr.helpers.fontStyleCrawler;
 import com.example.benedictlutab.sidelinetskr.models.Badge;
+import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -69,6 +70,16 @@ public class adapterBadges extends RecyclerView.Adapter<adapterBadges.ViewHolder
         //Bind fetched image url from server
         Picasso.with(context).load(holder.IMAGE).fit().centerInside().into(holder.ivBadgeImage);
 
+        holder.ivBadgeImage.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Log.e("ivBadgeImage: ", "CLICKED!!!");
+                displayBadgeDialog(holder.tvName.getText().toString(), holder.DESCRIPTION, holder.ivBadgeImage);
+            }
+        });
+
     }
 
     @Override
@@ -89,5 +100,15 @@ public class adapterBadges extends RecyclerView.Adapter<adapterBadges.ViewHolder
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    private void displayBadgeDialog(String title, String description, ImageView ivBadge)
+    {
+        Log.e("displayBadgeDialog: ", "START!");
+        new SweetAlertDialog(context, SweetAlertDialog.CUSTOM_IMAGE_TYPE)
+                .setTitleText(title)
+                .setContentText(description)
+                .setCustomImage(ivBadge.getDrawable())
+                .show();
     }
 }
